@@ -1,8 +1,56 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-entity Book {
-
+class User {
+  -userId: int
+  -username: string
+  -email: string
+  -password: string
+  -role: UserRole
+  -profilePic: Photo
 }
+
+enum UserRole {
+  ADMIN
+  STANDARD
+}
+
+class Book {
+  -bookId: int
+  -title: string
+  -author: string
+  -description: string
+  -status: BookStatus
+  -daysUnavailable: int
+  -bookCover: Photo
+}
+
+enum BookStatus {
+  AVAILABLE
+  BORROWED
+}
+
+class ReadingGroup {
+  -groupId: int
+  -name: string
+}
+
+class BorrowRecord {
+  -recordId: int
+}
+
+class Photo {
+  -photoId: int
+  -filename: string
+  -fileSize: int
+  -fileType: string
+  -content: byte[]
+}
+
+User "1" --> "*" Book : owns
+User "0..1" --> "*" BorrowRecord : borrows/returns
+Book "0..1" --> "0..*" BorrowRecord : is borrowed by
+Book --> Photo : has
+ReadingGroup "*" --> "*" Book : has books
+ReadingGroup "1" --> "*" User : has members
 
 @enduml
