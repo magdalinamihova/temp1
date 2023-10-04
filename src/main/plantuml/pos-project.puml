@@ -14,7 +14,7 @@ enum UserRole {
   STANDARD
 }
 
-class Bookies {
+class Books {
   -bookId: int
   -title: string
   -author: string
