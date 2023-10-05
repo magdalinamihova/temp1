@@ -1,12 +1,22 @@
 @startuml
 
-class User {
+left to right direction
+
+entity User {
   -userId: int
   -username: string
+  -firstName: string
+  -lastName: string
   -email: string
   -password: string
+  -gender: Gender
   -role: UserRole
   -profilePic: Photo
+  -dateOfBirth: Date
+  -phoneNumber: string
+  -address: string
+  -memberOf: Set<ReadingGroup>?
+  -groupsOwned: Set<ReadingGroup>
 }
 
 enum UserRole {
@@ -14,43 +24,124 @@ enum UserRole {
   STANDARD
 }
 
-class Book {
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+  OTHER
+}
+
+entity Book {
   -bookId: int
-  -title: string
+  -bookTitle: string
   -author: string
-  -description: string
-  -status: BookStatus
-  -daysUnavailable: int
+  -bookDescription: string
+  -genre: string
+  - language: string
   -bookCover: Photo
+  -hardCover: boolean
+  -postedBy: User
+  -borrowedBy: User?
+  -dueDate: Date?
+  -status: BookStatus
+  -daysUnavailable: int?
+  -rating: float
+  -reviews: Set<Review>?
 }
 
 enum BookStatus {
   AVAILABLE
   BORROWED
+  MUST_BE_RETURNED
 }
 
-class ReadingGroup {
+entity ReadingGroup {
   -groupId: int
   -name: string
+  -description: string
+  -groupMembers: Set<User>
+  -numOfMembers: int
+  -creationDate: Date
+  -createdBy: User
+  -booksPosted: Set<Book>?
+  -booksAvailable: Set<Book>?
+  -booksBorrowed: Set<Book>?
+  -joinRequests: Set<MembershipRequest>?
 }
 
-class BorrowRecord {
+entity Membership {
+  -membershipId: int
+  -user: User
+  -readingGroup: ReadingGroup
+  -joinDate: Date
+  -status: MembershipStatus
+}
+
+enum MembershipStatus {
+  ACTIVE
+  PENDING
+  BANNED
+}
+
+entity MembershipRequest {
+  -requestId: int
+  -user: User
+  -readingGroup: ReadingGroup
+  -requestDate: Date
+  -status: RequestStatus
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+entity Review {
+  -reviewId: int
+  -user: User
+  -book: Book
+  -rating: float
+  -comment: string
+  -reviewDate: Date
+}
+
+entity BorrowRecord {
   -recordId: int
+  -borrower: User
+  -borrowedBook: Book
+  -borrowDate: Date
+  -returnDate: Date?
 }
 
-class Photo {
+class Photo << (V,#229988) Embedable>> {
   -photoId: int
   -filename: string
   -fileSize: int
   -fileType: string
-  -content: byte[]
 }
 
-User "1" --> "*" Book : owns
-User "0..1" --> "*" BorrowRecord : borrows/returns
-Book "0..1" --> "0..*" BorrowRecord : is borrowed by
-Book --> Photo : has
-ReadingGroup "*" --> "*" Book : has books
-ReadingGroup "1" --> "*" User : has members
+User .. UserRole : has a role
+User .. Photo : is a profilePic
+User .. Gender : has a gender
+User "1" -- "n" Book : > borrows
+User "1" -- "n" Book : > owns
+Book "1" -- "1" User :  borrowed by
+ReadingGroup "n" -- "n" User : has users
+ReadingGroup "n" -- "1" User : < is created By
+ReadingGroup <-- Book : < is included
+BorrowRecord -- User : borrower
+BorrowRecord -- Book : borrowed book
+Book -- Review : has reviews
+User "1" -- "n" Review : writes reviews
+User "1" -- "n" Membership : has memberships
+ReadingGroup "1" -- "n" Membership : has memberships
+MembershipRequest "n" -- "1" User : requested by
+MembershipRequest "n" -- "1" ReadingGroup : requested for
+User .. Gender : has gender
+User .. UserRole : has role
+Book .. BookStatus : has status
+Membership .. MembershipStatus : has status
+MembershipRequest .. RequestStatus : has status
 
 @enduml
