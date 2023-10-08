@@ -44,7 +44,6 @@ entity Book {
   -borrowedBy: User?
   -dueDate: Date?
   -status: BookStatus
-  -daysUnavailable: int?
   -rating: float
   -reviews: Set<Review>?
 }
@@ -117,6 +116,7 @@ entity BorrowRecord {
 class Photo << (V,#229988) Embedable>> {
   -photoId: int
   -filename: string
+  -photoDescription: string
   -fileSize: int
   -fileType: string
 }
@@ -138,8 +138,6 @@ User "1" -- "n" Membership : has memberships
 ReadingGroup "1" -- "n" Membership : has memberships
 MembershipRequest "n" -- "1" User : requested by
 MembershipRequest "n" -- "1" ReadingGroup : requested for
-User .. Gender : has gender
-User .. UserRole : has role
 Book .. BookStatus : has status
 Membership .. MembershipStatus : has status
 MembershipRequest .. RequestStatus : has status
