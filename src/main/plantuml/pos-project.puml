@@ -2,33 +2,32 @@
 
 left to right direction
 
-entity User {
-  -userId: int
-  -username: string
-  -firstName: string
-  -lastName: string
-  -email: string
-  -password: string
-  -gender: Gender
-  -role: UserRole
-  -profilePic: Photo
-  -dateOfBirth: Date
-  -phoneNumber: string
-  -address: string
-  -memberOf: Set<ReadingGroup>?
-  -groupsOwned: Set<ReadingGroup>
-}
-
 enum UserRole {
   ADMIN
   STANDARD
 }
 
-enum Gender {
-  MALE
-  FEMALE
-  UNKNOWN
-  OTHER
+entity BorrowRecord {
+  -recordId: int
+  -borrower: User
+  -borrowedBook: Book
+  -borrowDate: Date
+  -returnDate: Date?
+}
+
+entity Review {
+  -reviewId: int
+  -user: User
+  -book: Book
+  -rating: float
+  -comment: string
+  -reviewDate: Date
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 entity Book {
@@ -48,10 +47,21 @@ entity Book {
   -reviews: Set<Review>?
 }
 
-enum BookStatus {
-  AVAILABLE
-  BORROWED
-  MUST_BE_RETURNED
+entity User {
+  -userId: int
+  -username: string
+  -firstName: string
+  -lastName: string
+  -email: string
+  -password: string
+  -gender: Gender
+  -role: UserRole
+  -profilePic: Photo
+  -dateOfBirth: Date
+  -phoneNumber: string
+  -address: string
+  -memberOf: Set<ReadingGroup>?
+  -groupsOwned: Set<ReadingGroup>
 }
 
 entity ReadingGroup {
@@ -68,14 +78,6 @@ entity ReadingGroup {
   -joinRequests: Set<MembershipRequest>?
 }
 
-entity Membership {
-  -membershipId: int
-  -user: User
-  -readingGroup: ReadingGroup
-  -joinDate: Date
-  -status: MembershipStatus
-}
-
 enum MembershipStatus {
   ACTIVE
   PENDING
@@ -90,27 +92,25 @@ entity MembershipRequest {
   -status: RequestStatus
 }
 
-enum RequestStatus {
-  PENDING
-  APPROVED
-  REJECTED
+enum BookStatus {
+  AVAILABLE
+  BORROWED
+  MUST_BE_RETURNED
 }
 
-entity Review {
-  -reviewId: int
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+  OTHER
+}
+
+entity Membership {
+  -membershipId: int
   -user: User
-  -book: Book
-  -rating: float
-  -comment: string
-  -reviewDate: Date
-}
-
-entity BorrowRecord {
-  -recordId: int
-  -borrower: User
-  -borrowedBook: Book
-  -borrowDate: Date
-  -returnDate: Date?
+  -readingGroup: ReadingGroup
+  -joinDate: Date
+  -status: MembershipStatus
 }
 
 class Photo << (V,#229988) Embedable>> {
@@ -127,9 +127,9 @@ User .. Gender : has a gender
 User "1" -- "n" Book : > borrows
 User "1" -- "n" Book : > owns
 Book "1" -- "1" User :  borrowed by
+ReadingGroup <-- Book : < is included
 ReadingGroup "n" -- "n" User : has users
 ReadingGroup "n" -- "1" User : < is created By
-ReadingGroup <-- Book : < is included
 BorrowRecord -- User : borrower
 BorrowRecord -- Book : borrowed book
 Book -- Review : has reviews
