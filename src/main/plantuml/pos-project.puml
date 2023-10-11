@@ -103,7 +103,6 @@ class Membership << (V,#229988) Embedable>>{
   -user: User
   -readingGroup: ReadingGroup
   -joinDate: Date
-  -status: MembershipStatus
 }
 
 class Photo << (V,#229988) Embedable>> {
