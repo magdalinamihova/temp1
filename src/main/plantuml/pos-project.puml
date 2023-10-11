@@ -40,7 +40,6 @@ entity Book {
   -bookCover: Photo
   -hardCover: boolean
   -postedBy: User
-  -borrowedBy: User?
   -dueDate: Date?
   -status: BookStatus
   -rating: float
@@ -76,12 +75,6 @@ entity ReadingGroup {
   -booksAvailable: Set<Book>?
   -booksBorrowed: Set<Book>?
   -joinRequests: Set<MembershipRequest>?
-}
-
-enum MembershipStatus {
-  ACTIVE
-  PENDING
-  BANNED
 }
 
 class MembershipRequest << (V,#229988) Embedable>> {
@@ -124,9 +117,7 @@ class Photo << (V,#229988) Embedable>> {
 User .. UserRole : has a role
 User .. Photo : is a profilePic
 User .. Gender : has a gender
-User "1" -- "n" Book : > borrows
 User "1" -- "n" Book : > owns
-Book "1" -- "1" User :  borrowed by
 ReadingGroup <-- Book : < is included
 ReadingGroup "n" -- "n" User : has users
 ReadingGroup "n" -- "1" User : < is created By
@@ -139,7 +130,6 @@ ReadingGroup "1" -- "n" Membership : has memberships
 MembershipRequest "n" -- "1" User : requested by
 MembershipRequest "n" -- "1" ReadingGroup : requested for
 Book .. BookStatus : has status
-Membership .. MembershipStatus : has status
 MembershipRequest .. RequestStatus : has status
 
 @enduml
