@@ -84,7 +84,7 @@ enum MembershipStatus {
   BANNED
 }
 
-entity MembershipRequest {
+class MembershipRequest << (V,#229988) Embedable>> {
   -requestId: int
   -user: User
   -readingGroup: ReadingGroup
@@ -105,7 +105,7 @@ enum Gender {
   OTHER
 }
 
-entity Membership {
+class Membership << (V,#229988) Embedable>>{
   -membershipId: int
   -user: User
   -readingGroup: ReadingGroup
