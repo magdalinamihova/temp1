@@ -8,7 +8,6 @@ enum UserRole {
 }
 
 entity BorrowRecord {
-  -recordId: int
   -borrower: User
   -borrowedBook: Book
   -borrowDate: Date
@@ -16,7 +15,6 @@ entity BorrowRecord {
 }
 
 entity Review {
-  -reviewId: int
   -user: User
   -book: Book
   -rating: float
@@ -31,7 +29,6 @@ enum RequestStatus {
 }
 
 entity Book {
-  -bookId: int
   -bookTitle: string
   -author: string
   -bookDescription: string
@@ -47,7 +44,6 @@ entity Book {
 }
 
 entity User {
-  -userId: int
   -username: string
   -firstName: string
   -lastName: string
@@ -56,7 +52,6 @@ entity User {
   -gender: Gender
   -role: UserRole
   -profilePic: Photo
-  -dateOfBirth: Date
   -phoneNumber: string
   -address: string
   -memberOf: Set<ReadingGroup>?
@@ -64,7 +59,6 @@ entity User {
 }
 
 entity ReadingGroup {
-  -groupId: int
   -name: string
   -description: string
   -groupMembers: Set<User>
@@ -78,7 +72,6 @@ entity ReadingGroup {
 }
 
 class MembershipRequest << (V,#229988) Embedable>> {
-  -requestId: int
   -user: User
   -readingGroup: ReadingGroup
   -requestDate: Date
@@ -99,7 +92,6 @@ enum Gender {
 }
 
 class Membership << (V,#229988) Embedable>>{
-  -membershipId: int
   -user: User
   -readingGroup: ReadingGroup
   -joinDate: Date
@@ -107,10 +99,10 @@ class Membership << (V,#229988) Embedable>>{
 }
 
 class Photo << (V,#229988) Embedable>> {
-  -photoId: int
-  -filename: string
-  -photoDescription: string
-  -fileSize: int
+  -name: string
+  -description: string
+  -width: int
+  -height:int
   -fileType: string
 }
 

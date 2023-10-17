@@ -11,6 +11,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 //@Builder
 
 @Entity
-@Table(name="readingGroups")
-public class ReadingGroup extends AbstractPersistable<Long> {
+@Table(name="records")
+public class BorrowRecord extends AbstractPersistable<Long> {
 }
