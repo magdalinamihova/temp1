@@ -1,11 +1,11 @@
-package at.spengergasse.sj2324posproject.domain;
+package at.spengergasse.sj2324posproject.domain.embeddables;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Data
+//@Data
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@AllArgsConstructor
 //@Builder

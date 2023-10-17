@@ -1,10 +1,12 @@
 package at.spengergasse.sj2324posproject.persistance.converters;
 
-import at.spengergasse.sj2324posproject.domain.Gender;
+import at.spengergasse.sj2324posproject.domain.enums.Gender;
+import at.spengergasse.sj2324posproject.persistance.exception.DataQualityException;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.util.Optional;
+import java.util.zip.DataFormatException;
 
 @Converter(autoApply = true)
 public class GenderConverter implements AttributeConverter<Gender,String> {
@@ -27,10 +29,10 @@ public class GenderConverter implements AttributeConverter<Gender,String> {
                     return switch (v) {
                         case "m" -> Gender.MALE;
                         case "f" -> Gender.FEMALE;
-                        case "dk" -> Gender.UNKNOWN;
-                        case "other" -> Gender.OTHER;
+                        case "u" -> Gender.UNKNOWN;
+                        case "o" -> Gender.OTHER;
                         default ->
-                                throw new IllegalArgumentException("%s is not a valid value for Gender".formatted(v));
+                                throw DataQualityException.forInvalidValue(dbValue,Gender.class);
                     };
                 }).orElse(null);
 

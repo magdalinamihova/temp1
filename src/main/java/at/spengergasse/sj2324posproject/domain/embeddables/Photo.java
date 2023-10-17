@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.domain;
+package at.spengergasse.sj2324posproject.domain.embeddables;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,15 +14,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Embeddable
 public class Photo{
-    @NotNull @NotEmpty
     @Column(length = 64, nullable = false)
-    private String name;
+    private  @NotNull @NotEmpty String name;
     @Column(length = 1024, nullable = false)
     private String description;
-    @NotNull @PositiveOrZero
-    private int width;
-    @NotNull @PositiveOrZero
-    private int height;
-    @NotNull @NotEmpty
-    private String filetype;
+    private @NotNull @PositiveOrZero int width;
+    private @NotNull @PositiveOrZero int height;
+    private @NotNull @NotEmpty String filetype;
 }

@@ -1,14 +1,13 @@
-package at.spengergasse.sj2324posproject.domain;
+package at.spengergasse.sj2324posproject.domain.entities;
 
+import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
+import at.spengergasse.sj2324posproject.domain.enums.UserRole;
+import at.spengergasse.sj2324posproject.domain.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,21 +17,16 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class User extends AbstractPersistable<Long> {
-    @NotNull @NotEmpty
-    @Column(length = 20, nullable = false)
-    private String username;
-    @NotNull @NotEmpty
-    @Column(length = 20, nullable = false)
-    private String firstName;
-    @NotNull @NotEmpty
-    @Column(length = 20, nullable = false)
-    private String lastName;
-    @NotNull @NotEmpty
-    @Column(length = 20, nullable = false)
-    private String email;
-    @NotNull @NotEmpty
-    @Column(length = 20, nullable = false)
-    private String password;
+    @Column(length = 32, nullable = false)
+    private @NotNull @NotEmpty String username;
+    @Column(length = 16, nullable = false)
+    private  @NotNull @NotEmpty String firstName;
+    @Column(length = 16, nullable = false)
+    private  @NotNull @NotEmpty String lastName;
+    @Column(length = 32, nullable = false)
+    private  @NotNull @NotEmpty String email;
+    @Column(length = 32, nullable = false)
+    private  @NotNull @NotEmpty String password;
     private String phoneNumber;
     private String address;
     @Column(length = 1)

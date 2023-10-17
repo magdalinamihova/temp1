@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.domain;
+package at.spengergasse.sj2324posproject.domain.enums;
 
 enum BookStatus {
     AVAILABLE,

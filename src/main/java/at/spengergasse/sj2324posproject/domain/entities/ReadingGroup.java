@@ -1,16 +1,16 @@
-package at.spengergasse.sj2324posproject.domain;
+package at.spengergasse.sj2324posproject.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-@Data
+//@Data
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@AllArgsConstructor
 //@Builder
 
-@Entity
-@Table(name="books")
-public class Book extends AbstractPersistable<Long> {
+//@Entity
+//@Table(name="readingGroups")
+public class ReadingGroup extends AbstractPersistable<Long> {
 }
