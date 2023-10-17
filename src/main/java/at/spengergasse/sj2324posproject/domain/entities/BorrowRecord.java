@@ -12,5 +12,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 //@Entity
 //@Table(name="records")
+//TODO implement class
 public class BorrowRecord extends AbstractPersistable<Long> {
 }

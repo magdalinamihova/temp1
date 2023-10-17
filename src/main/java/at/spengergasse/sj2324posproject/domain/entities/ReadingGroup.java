@@ -12,5 +12,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 //@Entity
 //@Table(name="readingGroups")
+//TODO implement class
 public class ReadingGroup extends AbstractPersistable<Long> {
 }

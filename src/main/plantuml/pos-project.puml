@@ -1,5 +1,5 @@
 @startuml
-
+'TODO please format ref: https://htlspengergasse.sharepoint.com/sites/SJ2324_4EHIF/_layouts/15/stream.aspx?id=%2Fsites%2FSJ2324%5F4EHIF%2FFreigegebene%20Dokumente%2FPOS1%5FJava%2FRecordings%2FMeeting%20in%20%5FPOS1%5FJava%5F%2D20230927%5F080959%2DMeeting%20Recording%2Emp4
 left to right direction
 
 enum UserRole {
@@ -95,7 +95,6 @@ class Membership << (V,#229988) Embedable>>{
   -user: User
   -readingGroup: ReadingGroup
   -joinDate: Date
-  -status: MembershipStatus
 }
 
 class Photo << (V,#229988) Embedable>> {

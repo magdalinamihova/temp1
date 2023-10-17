@@ -80,5 +80,10 @@ class ReviewRepositoryTest {
         assertThat(saved).isNotNull().isSameAs(review);
         assertThat(saved.getId()).isNotNull();
     }
+    //TODO
+    @Test
+    void ensureFindByCommentWorks(){
+
+    }
 
 }

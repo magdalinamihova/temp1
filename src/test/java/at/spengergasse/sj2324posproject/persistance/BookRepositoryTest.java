@@ -70,4 +70,9 @@ class BookRepositoryTest {
         assertThat(saved).isNotNull().isSameAs(book);
         assertThat(saved.getId()).isNotNull();
     }
+    //TODO
+    @Test
+    void ensureFindByBookTitleWorks(){
+
+    }
 }
