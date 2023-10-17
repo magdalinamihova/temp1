@@ -9,8 +9,9 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 //@AllArgsConstructor
 //@Builder
-
+//
 //@Entity
 //@Table(name="reviews")
 public class Review extends AbstractPersistable<Long> {
+
 }
