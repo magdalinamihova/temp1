@@ -12,4 +12,5 @@ import lombok.*;
 
 @Embeddable
 public class Membership {
+
 }
