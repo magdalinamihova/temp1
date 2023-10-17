@@ -10,7 +10,6 @@ import java.util.zip.DataFormatException;
 
 @Converter(autoApply = true)
 public class GenderConverter implements AttributeConverter<Gender,String> {
-
     @Override
     public String convertToDatabaseColumn(Gender gender) {
         return Optional.ofNullable(gender)

@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -17,21 +19,26 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Table(name="users")
 public class User extends AbstractPersistable<Long> {
-    @Column(length = 32, nullable = false)
+    @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String username;
-    @Column(length = 16, nullable = false)
+    @Column(length = 256, nullable = false)
     private  @NotNull @NotEmpty String firstName;
-    @Column(length = 16, nullable = false)
+    @Column(length = 256, nullable = false)
     private  @NotNull @NotEmpty String lastName;
-    @Column(length = 32, nullable = false)
-    private  @NotNull @NotEmpty String email;
-    @Column(length = 32, nullable = false)
+   @Column(length = 256, nullable = false)
     private  @NotNull @NotEmpty String password;
+    @Column(length = 32, nullable = false)
+
+    //TODO Implement email rich-type, phoneNumber class, Address class
+    private  @NotNull @NotEmpty String email;
+    @Column(length = 32)
     private String phoneNumber;
+    @Column(length = 256)
     private String address;
-    @Column(length = 1)
+
+    @Column(columnDefinition = "CHAR(1) CHECK(gender in ('f','m','o','u'))")
     private Gender gender;
-    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "CHAR(1) CHECK(userRole in ('A','S'))")
     private UserRole role;
     @Embedded
     private Photo profilePic;

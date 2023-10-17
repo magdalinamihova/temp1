@@ -1,6 +1,7 @@
 package at.spengergasse.sj2324posproject.persistance.converters;
 
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
+import at.spengergasse.sj2324posproject.persistance.exception.DataQualityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +36,7 @@ class GenderConverterTest {
     @Test
     void ensureConvertToEntityAttributeInValidThrowsException(){
         //expect
-       var iaEx = assertThrows(IllegalArgumentException.class,()->converter.convertToEntityAttribute("k"));
+       var iaEx = assertThrows(DataQualityException.class,()->converter.convertToEntityAttribute("k"));
        assertThat(iaEx).hasMessage("k is not a valid value for Gender");
     }
 }
