@@ -36,7 +36,7 @@ public class Book extends AbstractPersistable<Long> {
     @ManyToOne
     private User postedBy;
     private Date dueDate;
-    @Column(columnDefinition = "CHAR(3) CHECK(bookStatus in ('AVL','BRW',MBR))")
+    @Column(columnDefinition = "CHAR(3) CHECK(book_status in ('AVL','BRW','MBR'))")
     private BookStatus bookStatus;
     private float rating;
 

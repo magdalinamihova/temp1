@@ -19,10 +19,18 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 class ReviewRepositoryTest {
     @Autowired
-    private ReviewRepository repository;
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private BookRepository bookRepository;
+    @Autowired
+    private UserRepository userRepository;
+
     private User user;
+    private User savedUser;
     private Book book;
+    private Book savedBook;
     private Review review;
+    private Review savedReview;
 
     @BeforeEach
     void setup() {
@@ -35,7 +43,7 @@ class ReviewRepositoryTest {
                 .phoneNumber("test")
                 .address("test")
                 .gender(Gender.FEMALE)
-                .role(UserRole.STANDARD)
+                .userRole(UserRole.STANDARD)
                 .profilePic(Photo.builder()
                         .name("profpic")
                         .description("description")
@@ -44,6 +52,8 @@ class ReviewRepositoryTest {
                         .filetype("png")
                         .build())
                 .build();
+
+        savedUser = userRepository.save(user);
 
         book = Book.builder()
                 .bookTitle("Little Women")
@@ -59,31 +69,32 @@ class ReviewRepositoryTest {
                         .filetype("png")
                         .build())
                 .hardCover(true)
-                .postedBy(user)
+                .postedBy(savedUser)
                 .bookStatus(BookStatus.AVAILABLE)
                 .rating(4.5f)
                 .build();
 
+        savedBook = bookRepository.save(book);
+
         review = review.builder()
-                .user(user)
-                .book(book)
+                .user(savedUser)
+                .book(savedBook)
                 .rating(1.5)
                 .comment("comment")
                 .reviewDate(LocalDate.now())
                 .build();
+        savedReview = reviewRepository.save(review);
     }
     @Test
     void ensureSavingAndRereadingUserWorks(){
-        //when
-        var saved = repository.save(review);
-        //then
-        assertThat(saved).isNotNull().isSameAs(review);
-        assertThat(saved.getId()).isNotNull();
+        assertThat(savedReview).isNotNull().isSameAs(review);
+        assertThat(savedReview.getId()).isNotNull();
     }
-    //TODO
+
     @Test
     void ensureFindByCommentWorks(){
-
+        var found = reviewRepository.findByUser_Username("josie");
+        assertThat(found).isPresent();
     }
 
 }

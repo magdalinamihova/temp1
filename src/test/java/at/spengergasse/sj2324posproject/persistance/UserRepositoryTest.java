@@ -29,7 +29,7 @@ class UserRepositoryTest {
                 .phoneNumber("test")
                 .address("test")
                 .gender(Gender.FEMALE)
-                .role(UserRole.STANDARD)
+                .userRole(UserRole.STANDARD)
                 .profilePic(Photo.builder()
                         .name("profpic")
                         .description("description")
@@ -46,15 +46,16 @@ class UserRepositoryTest {
         var saved = repository.save(user);
         //then
         assertThat(saved).isNotNull().isSameAs(user);
-        assertThat(saved.getId()).isNotNull();
+        assertThat(saved.getUsername()).isNotNull().isEqualTo("josie");
     }
 
     @Test
     void ensureFindingByNicknameWorks(){
-        var saved = repository.save(user);
         //when
+        var saved = repository.save(user);
         var found = repository.findByUsername("josie");
         //then
+        //assertThat(saved.getUsername()).isNotNull().isEqualTo("josie");
         assertThat(found).isPresent();
     }
 }

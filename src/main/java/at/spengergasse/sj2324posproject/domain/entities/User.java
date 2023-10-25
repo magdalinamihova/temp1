@@ -38,8 +38,8 @@ public class User extends AbstractPersistable<Long> {
 
     @Column(columnDefinition = "CHAR(1) CHECK(gender in ('f','m','o','u'))")
     private Gender gender;
-    @Column(columnDefinition = "CHAR(1) CHECK(userRole in ('A','S'))")
-    private UserRole role;
+    @Column(columnDefinition = "CHAR(1) CHECK(user_role in ('A','S'))")
+    private UserRole userRole;
     @Embedded
     private Photo profilePic;
 
