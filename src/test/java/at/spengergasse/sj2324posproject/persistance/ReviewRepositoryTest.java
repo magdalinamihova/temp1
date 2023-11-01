@@ -93,7 +93,7 @@ class ReviewRepositoryTest {
 
     @Test
     void ensureFindByCommentWorks(){
-        var found = reviewRepository.findByUser_Username("josie");
+        var found = reviewRepository.findByComment("comment");
         assertThat(found).isPresent();
     }
 
