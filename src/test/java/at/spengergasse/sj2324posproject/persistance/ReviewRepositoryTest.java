@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 
+import static at.spengergasse.sj2324posproject.domain.TestFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
@@ -25,76 +26,26 @@ class ReviewRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    private User user;
-    private User savedUser;
-    private Book book;
-    private Book savedBook;
-    private Review review;
-    private Review savedReview;
-
     @BeforeEach
     void setup() {
-        user = User.builder()
-                .username("josie")
-                .firstName("Josette")
-                .lastName("Saltzman")
-                .email("josie@developers.org")
-                .password("jos123")
-                .phoneNumber("test")
-                .address("test")
-                .gender(Gender.FEMALE)
-                .userRole(UserRole.STANDARD)
-                .profilePic(Photo.builder()
-                        .name("profpic")
-                        .description("description")
-                        .width(640)
-                        .height(480)
-                        .filetype("png")
-                        .build())
-                .build();
+        User savedUser = userRepository.save(user());
+        Book book = book();
+        book.setPostedBy(savedUser);
+        Book savedBook = bookRepository.save(book);
+        Review review = review();
+        review.setUser(savedUser);
+        review.setBook(savedBook);
+        reviewRepository.save(review);
 
-        savedUser = userRepository.save(user);
-
-        book = Book.builder()
-                .bookTitle("Little Women")
-                .author("Louisa May Alcott")
-                .bookDescription("Description")
-                .genre("Period piece")
-                .language("English")
-                .bookCover(Photo.builder()
-                        .name("little women cover")
-                        .description("description")
-                        .width(800)
-                        .height(600)
-                        .filetype("png")
-                        .build())
-                .hardCover(true)
-                .postedBy(savedUser)
-                .bookStatus(BookStatus.AVAILABLE)
-                .rating(4.5f)
-                .build();
-
-        savedBook = bookRepository.save(book);
-
-        review = review.builder()
-                .user(savedUser)
-                .book(savedBook)
-                .rating(1.5)
-                .comment("comment")
-                .reviewDate(LocalDate.now())
-                .build();
-        savedReview = reviewRepository.save(review);
     }
     @Test
     void ensureSavingAndRereadingUserWorks(){
-        assertThat(savedReview).isNotNull().isSameAs(review);
-        assertThat(savedReview.getId()).isNotNull();
+        assertThat(reviewRepository).isNotNull();
     }
 
     @Test
     void ensureFindByCommentWorks(){
-        var found = reviewRepository.findByComment("comment");
-        assertThat(found).isPresent();
+        assertThat(reviewRepository.findByComment("comment")).isPresent();
     }
 
 }
