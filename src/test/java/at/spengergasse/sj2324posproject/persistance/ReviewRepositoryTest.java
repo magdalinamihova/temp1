@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.persistance;
+package at.spengergasse.sj2324posproject.persistance.domain;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.Book;
@@ -7,6 +7,9 @@ import at.spengergasse.sj2324posproject.domain.entities.User;
 import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
 import at.spengergasse.sj2324posproject.domain.enums.UserRole;
+import at.spengergasse.sj2324posproject.persistance.BookRepository;
+import at.spengergasse.sj2324posproject.persistance.ReviewRepository;
+import at.spengergasse.sj2324posproject.persistance.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
