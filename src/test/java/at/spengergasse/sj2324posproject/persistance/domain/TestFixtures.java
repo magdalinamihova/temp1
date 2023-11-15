@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.domain;
+package at.spengergasse.sj2324posproject.persistance.domain;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.Book;
@@ -6,6 +6,7 @@ import at.spengergasse.sj2324posproject.domain.entities.Review;
 import at.spengergasse.sj2324posproject.domain.entities.User;
 import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
+import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.domain.enums.UserRole;
 import at.spengergasse.sj2324posproject.persistance.BookRepository;
 import at.spengergasse.sj2324posproject.persistance.UserRepository;
@@ -17,10 +18,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//TODO implement testfixtures -- ill do it
 @DataJpaTest
 public class TestFixtures {
 
@@ -65,12 +66,11 @@ public class TestFixtures {
                 .author("Louisa May Alcott")
                 .bookDescription("Description")
                 .genre("Period piece")
-                .language("English")
+                .language(Language.ENGLISH)
                 .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(user())
                 .bookStatus(BookStatus.AVAILABLE)
-                .rating(4.5f)
                 .build();
     }
 
@@ -83,5 +83,6 @@ public class TestFixtures {
                 .reviewDate(LocalDate.now())
                 .build();
     }
+
 
 }

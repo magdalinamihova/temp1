@@ -2,6 +2,7 @@ package at.spengergasse.sj2324posproject.domain.entities;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
+import at.spengergasse.sj2324posproject.domain.enums.Language;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -25,9 +26,8 @@ public class Book extends AbstractPersistable<Long> {
     private @NotNull @NotEmpty String author;
     @Column(nullable = false)
     private @NotNull @NotEmpty String bookDescription;
-    //TODO create an Enum for languages
-    @Column(length = 32, nullable = false)
-    private @NotNull @NotEmpty String language;
+    @Column(columnDefinition = "CHAR(2) CHECK(language in ('EN','DE','FR','ES','IT','PT','NL','RU','PL','SV','NO','DA','FI','EL','CS','HU','RO','BG','SR','HR','BS','SK','SL'))")
+    private Language language;
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String genre;
     @Embedded
@@ -38,9 +38,9 @@ public class Book extends AbstractPersistable<Long> {
     private Date dueDate;
     @Column(columnDefinition = "CHAR(3) CHECK(book_status in ('AVL','BRW','MBR'))")
     private BookStatus bookStatus;
-    private float rating;
-
-//    @OneToMany(mappedBy = "book")
-//    private Set<Review> reviews;
+    //TODO how will the avregaeRating be calculated? method?
+    //private float averageRating;
+    @OneToMany(mappedBy = "book")
+    private Set<Review> reviews;
 
 }

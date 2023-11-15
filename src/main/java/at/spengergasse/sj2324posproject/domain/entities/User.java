@@ -25,7 +25,7 @@ public class User extends AbstractPersistable<Long> {
     private  @NotNull @NotEmpty String firstName;
     @Column(length = 256, nullable = false)
     private  @NotNull @NotEmpty String lastName;
-   @Column(length = 256, nullable = false)
+    @Column(length = 256, nullable = false)
     private  @NotNull @NotEmpty String password;
     @Column(length = 32, nullable = false)
 

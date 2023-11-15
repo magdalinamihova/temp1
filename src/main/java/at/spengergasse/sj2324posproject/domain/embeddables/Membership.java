@@ -1,16 +1,23 @@
 package at.spengergasse.sj2324posproject.domain.embeddables;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import at.spengergasse.sj2324posproject.domain.entities.ReadingGroup;
+import at.spengergasse.sj2324posproject.domain.entities.User;
+import jakarta.persistence.*;
 import lombok.*;
 
-//@Data
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
-//@Builder
+import java.util.Date;
+
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 //TODO implement
 @Embeddable
 public class Membership {
-
+    @ManyToOne
+    private User user;
+    @ManyToOne
+    private ReadingGroup readingGroup;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date joinDate;
 }
