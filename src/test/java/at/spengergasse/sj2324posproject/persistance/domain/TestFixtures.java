@@ -58,6 +58,21 @@ public class TestFixtures {
                 .build();
     }
 
+    public static User user1 (){
+        return User.builder()
+                .username("brooke")
+                .firstName("brooke")
+                .lastName("thompson")
+                .email("brooke@developers.org")
+                .password("bro123")
+                .phoneNumber("test")
+                .address("test")
+                .gender(Gender.FEMALE)
+                .userRole(UserRole.STANDARD)
+                .profilePic(profilePic())
+                .build();
+    }
+
     public static ReadingGroup readingGroup(User createdBy) {
         return ReadingGroup.builder()
                 .name("Book Club 1")
