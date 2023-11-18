@@ -16,7 +16,6 @@ import java.util.Set;
 
 @Entity
 @Table(name="readingGroups")
-//TODO implement class
 public class ReadingGroup extends AbstractPersistable<Long> {
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String name;
@@ -30,5 +29,9 @@ public class ReadingGroup extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "readingGroup")
     private Set<Membership> memberships;
 
+    @PrePersist
+    private void prePersist() {
+        this.creationDate = new Date();
+    }
 
 }

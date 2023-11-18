@@ -23,12 +23,9 @@ class ReviewRepositoryTest {
     @BeforeEach
     void setup() {
         User savedUser = userRepository.save(user());
-        Book book = book();
-        book.setPostedBy(savedUser);
+        Book book = book(savedUser);
         Book savedBook = bookRepository.save(book);
-        Review review = review();
-        review.setReviewer(savedUser);
-        review.setReviewedBook(savedBook);
+        Review review = review(savedUser,savedBook);
         reviewRepository.save(review);
 
     }

@@ -22,8 +22,7 @@ class BookRepositoryTest {
     @BeforeEach
     void setup() {
         User savedUser = userRepository.save(user());
-        Book book = book();
-        book.setPostedBy(savedUser);
+        Book book = book(savedUser);
         bookRepository.save(book);
     }
 

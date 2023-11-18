@@ -71,10 +71,7 @@ entity ReadingGroup {
   -joinRequests: Set<MembershipRequest>?
 }
 
-entity ReadingGroupUser{
-    -user: User
-    -readingGroup: ReadingGroup
-}
+
 
 class MembershipRequest << (V,#229988) Embedable>> {
   -user: User
@@ -118,8 +115,6 @@ ReadingGroup <-- Book : < is included
 ReadingGroup "n" -- "1" User : < is created By
 BorrowRecord -- User : borrower
 BorrowRecord -- Book : borrowed book
-ReadingGroupUser -- User : member
-ReadingGroupUser -- ReadingGroup : group
 Book -- Review : has reviews
 User "1" -- "n" Review : writes reviews
 User "1" -- "n" Membership : has memberships

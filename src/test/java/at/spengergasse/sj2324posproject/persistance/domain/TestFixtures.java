@@ -1,9 +1,7 @@
 package at.spengergasse.sj2324posproject.persistance.domain;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
-import at.spengergasse.sj2324posproject.domain.entities.Book;
-import at.spengergasse.sj2324posproject.domain.entities.Review;
-import at.spengergasse.sj2324posproject.domain.entities.User;
+import at.spengergasse.sj2324posproject.domain.entities.*;
 import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
@@ -60,7 +58,22 @@ public class TestFixtures {
                 .build();
     }
 
-    public static Book book (){
+    public static ReadingGroup readingGroup(User createdBy) {
+        return ReadingGroup.builder()
+                .name("Book Club 1")
+                .description("description")
+                .createdBy(createdBy)
+                .build();
+    }
+
+    public static Membership membership(User member, ReadingGroup readingGroup) {
+        return Membership.builder()
+                .member(member)
+                .readingGroup(readingGroup)
+                .build();
+    }
+
+    public static Book book (User postedBy){
         return Book.builder()
                 .bookTitle("Little Women")
                 .author("Louisa May Alcott")
@@ -69,15 +82,15 @@ public class TestFixtures {
                 .language(Language.ENGLISH)
                 .bookCover(bookCover())
                 .hardCover(true)
-                .postedBy(user())
+                .postedBy(postedBy)
                 .bookStatus(BookStatus.AVAILABLE)
                 .build();
     }
 
-    public static Review review (){
+    public static Review review (User reviewer, Book reviewedBook){
         return Review.builder()
-                .reviewer(user())
-                .reviewedBook(book())
+                .reviewer(reviewer)
+                .reviewedBook(reviewedBook)
                 .rating(1.5)
                 .comment("comment")
                 .build();

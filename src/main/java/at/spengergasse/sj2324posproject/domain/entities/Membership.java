@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-//TODO implement
+
 @Entity
 @Table
 public class Membership extends AbstractPersistable<Long> {
@@ -24,4 +24,9 @@ public class Membership extends AbstractPersistable<Long> {
     private User member;
     @ManyToOne
     private ReadingGroup readingGroup;
+
+    @PrePersist
+    private void prePersist() {
+        this.joinDate = new Date();
+    }
 }
