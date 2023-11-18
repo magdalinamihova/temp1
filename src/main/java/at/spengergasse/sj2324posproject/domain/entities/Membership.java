@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 
 @Entity
-@Table
+@Table(name="memberships")
 public class Membership extends AbstractPersistable<Long> {
     @Column @Temporal(TemporalType.TIMESTAMP)
     private Date joinDate;

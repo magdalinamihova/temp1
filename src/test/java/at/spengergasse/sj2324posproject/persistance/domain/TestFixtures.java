@@ -2,10 +2,7 @@ package at.spengergasse.sj2324posproject.persistance.domain;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.*;
-import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
-import at.spengergasse.sj2324posproject.domain.enums.Gender;
-import at.spengergasse.sj2324posproject.domain.enums.Language;
-import at.spengergasse.sj2324posproject.domain.enums.UserRole;
+import at.spengergasse.sj2324posproject.domain.enums.*;
 import at.spengergasse.sj2324posproject.persistance.BookRepository;
 import at.spengergasse.sj2324posproject.persistance.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -98,7 +95,6 @@ public class TestFixtures {
                 .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
-                .bookStatus(BookStatus.AVAILABLE)
                 .build();
     }
 
@@ -108,6 +104,21 @@ public class TestFixtures {
                 .reviewedBook(reviewedBook)
                 .rating(1.5)
                 .comment("comment")
+                .build();
+    }
+
+    public static MembershipRequest membershipRequest (User requestingUser, ReadingGroup requestedRG){
+        return MembershipRequest.builder()
+                .requestingUser(requestingUser)
+                .requestedReadingGroup(requestedRG)
+                .status(RequestStatus.APPROVED)
+                .build();
+    }
+
+    public static BorrowRecord borrowRecord (User borrower, Book borrowedBook){
+        return BorrowRecord.builder()
+                .borrower(borrower)
+                .borrowedBook(borrowedBook)
                 .build();
     }
 

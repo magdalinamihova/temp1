@@ -44,4 +44,9 @@ public class Book extends AbstractPersistable<Long> {
     private Set<Review> reviews;
     @ManyToOne
     private User postedBy;
+
+    @PrePersist
+    private void prePersist() {
+        this.bookStatus=BookStatus.AVAILABLE;
+    }
 }

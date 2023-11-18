@@ -28,6 +28,8 @@ public class ReadingGroup extends AbstractPersistable<Long> {
     private User createdBy;
     @OneToMany(mappedBy = "readingGroup")
     private Set<Membership> memberships;
+    @OneToMany(mappedBy = "requestedReadingGroup")
+    private Set<MembershipRequest> membershipRequests;
 
     @PrePersist
     private void prePersist() {
