@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 class LanguageConverterTest {
-
+//TODO: Test all languages -> ask AI to generate all enum values
     private LanguageConverter converter;
 
     @BeforeEach
@@ -28,7 +28,6 @@ class LanguageConverterTest {
         // expect
         assertThat(converter.convertToEntityAttribute("EN")).isEqualTo(Language.ENGLISH);
         assertThat(converter.convertToEntityAttribute("DE")).isEqualTo(Language.GERMAN);
-        // Add assertions for other languages as needed
         assertThat(converter.convertToEntityAttribute(null)).isEqualTo(null);
     }
 
