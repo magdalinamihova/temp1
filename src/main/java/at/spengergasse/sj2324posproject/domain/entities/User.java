@@ -28,14 +28,12 @@ public class User extends AbstractPersistable<Long> {
     @Column(length = 256, nullable = false)
     private  @NotNull @NotEmpty String password;
     @Column(length = 32, nullable = false)
-
     //TODO Implement email rich-type, phoneNumber class, Address class. for ref: https://htlspengergasse.sharepoint.com/sites/SJ2324_4EHIF/_layouts/15/stream.aspx?id=%2Fsites%2FSJ2324%5F4EHIF%2FFreigegebene%20Dokumente%2FPOS1%5FJava%2FRecordings%2FMeeting%20in%20%5FPOS1%5FJava%5F%2D20231006%5F080431%2DMeeting%20Recording%2Emp4
     private  @NotNull @NotEmpty String email;
     @Column(length = 32)
     private String phoneNumber;
     @Column(length = 256)
     private String address;
-
     @Column(columnDefinition = "CHAR(1) CHECK(gender in ('f','m','o','u'))")
     private Gender gender;
     @Column(columnDefinition = "CHAR(1) CHECK(user_role in ('A','S'))")
@@ -43,11 +41,13 @@ public class User extends AbstractPersistable<Long> {
     @Embedded
     private Photo profilePic;
 
-    //TODO Establish relationships for ref: https://htlspengergasse.sharepoint.com/sites/SJ2324_4EHIF/_layouts/15/stream.aspx?id=%2Fsites%2FSJ2324%5F4EHIF%2FFreigegebene%20Dokumente%2FPOS1%5FJava%2FRecordings%2FMeeting%20in%20%5FPOS1%5FJava%5F%2D20231006%5F080431%2DMeeting%20Recording%2Emp4
-//    private Set<ReadingGroup> memberOf;
-//    private Set<ReadingGroup> groupsOwned;
-//    private Set<Review> reviews;
-//    private Set<Membership> memberships;
+    //RELATIONSHIPS
+    @OneToMany(mappedBy = "createdBy")
+    private Set<ReadingGroup> groupsOwned;
+    @OneToMany(mappedBy = "reviewer")
+    private Set<Review> reviews;
+    @OneToMany(mappedBy = "member")
+    private Set<Membership> memberships;
 
 
 }

@@ -18,21 +18,17 @@ import java.util.Set;
 @Table(name="readingGroups")
 //TODO implement class
 public class ReadingGroup extends AbstractPersistable<Long> {
+    @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String name;
+    @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String description;
-    @ManyToMany(mappedBy = "memberOf")
-    private Set<User> groupMembers;
-    private int numOfMembers;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
+
     @ManyToOne
     private User createdBy;
-    @OneToMany(mappedBy = "postedBy")
-    private Set<Book> booksPosted;
-    @OneToMany(mappedBy = "booksAvailable")
-    private Set<Book> booksAvailable;
-    @OneToMany(mappedBy = "booksBorrowed")
-    private Set<Book> booksBorrowed;
     @OneToMany(mappedBy = "readingGroup")
-    private Set<MembershipRequest> joinRequests;
+    private Set<Membership> memberships;
+
+
 }

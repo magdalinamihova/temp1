@@ -32,15 +32,16 @@ public class Book extends AbstractPersistable<Long> {
     private @NotNull @NotEmpty String genre;
     @Embedded
     private Photo bookCover;
+    @Column
     private boolean hardCover;
-    @ManyToOne
-    private User postedBy;
+    @Column @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
     @Column(columnDefinition = "CHAR(3) CHECK(book_status in ('AVL','BRW','MBR'))")
     private BookStatus bookStatus;
-    //TODO how will the avregaeRating be calculated? method?
-    //private float averageRating;
-    @OneToMany(mappedBy = "book")
-    private Set<Review> reviews;
 
+    //RELATIONSHIPS
+    @OneToMany(mappedBy = "reviewedBook")
+    private Set<Review> reviews;
+    @ManyToOne
+    private User postedBy;
 }

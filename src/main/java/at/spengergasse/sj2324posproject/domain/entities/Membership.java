@@ -1,9 +1,10 @@
-package at.spengergasse.sj2324posproject.domain.embeddables;
+package at.spengergasse.sj2324posproject.domain.entities;
 
 import at.spengergasse.sj2324posproject.domain.entities.ReadingGroup;
 import at.spengergasse.sj2324posproject.domain.entities.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.util.Date;
 
@@ -12,12 +13,15 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 //TODO implement
-@Embeddable
-public class Membership {
+@Entity
+@Table
+public class Membership extends AbstractPersistable<Long> {
+    @Column @Temporal(TemporalType.TIMESTAMP)
+    private Date joinDate;
+
+    //RELATIONSHIPS
     @ManyToOne
-    private User user;
+    private User member;
     @ManyToOne
     private ReadingGroup readingGroup;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date joinDate;
 }

@@ -33,7 +33,7 @@ entity Book {
   -author: string
   -bookDescription: string
   -genre: string
-  - language: string
+  -language: string
   -bookCover: Photo
   -hardCover: boolean
   -postedBy: User
@@ -54,21 +54,26 @@ entity User {
   -profilePic: Photo
   -phoneNumber: string
   -address: string
-  -memberOf: Set<ReadingGroup>?
+'  -memberOf: Set<ReadingGroup>?
   -groupsOwned: Set<ReadingGroup>
 }
 
 entity ReadingGroup {
   -name: string
   -description: string
-  -groupMembers: Set<User>
-  -numOfMembers: int
+'  -groupMembers: Set<User>
+'  -numOfMembers: int
   -creationDate: Date
   -createdBy: User
   -booksPosted: Set<Book>?
-  -booksAvailable: Set<Book>?
-  -booksBorrowed: Set<Book>?
+'  -booksAvailable: Set<Book>? will be methods
+'  -booksBorrowed: Set<Book>?
   -joinRequests: Set<MembershipRequest>?
+}
+
+entity ReadingGroupUser{
+    -user: User
+    -readingGroup: ReadingGroup
 }
 
 class MembershipRequest << (V,#229988) Embedable>> {
@@ -110,10 +115,11 @@ User .. Photo : is a profilePic
 User .. Gender : has a gender
 User "1" -- "n" Book : > owns
 ReadingGroup <-- Book : < is included
-ReadingGroup "n" -- "n" User : has users
 ReadingGroup "n" -- "1" User : < is created By
 BorrowRecord -- User : borrower
 BorrowRecord -- Book : borrowed book
+ReadingGroupUser -- User : member
+ReadingGroupUser -- ReadingGroup : group
 Book -- Review : has reviews
 User "1" -- "n" Review : writes reviews
 User "1" -- "n" Membership : has memberships

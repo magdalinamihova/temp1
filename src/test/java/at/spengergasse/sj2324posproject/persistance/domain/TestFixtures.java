@@ -76,11 +76,10 @@ public class TestFixtures {
 
     public static Review review (){
         return Review.builder()
-                .user(user())
-                .book(book())
+                .reviewer(user())
+                .reviewedBook(book())
                 .rating(1.5)
                 .comment("comment")
-                .reviewDate(LocalDate.now())
                 .build();
     }
 

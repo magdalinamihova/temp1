@@ -27,8 +27,8 @@ class ReviewRepositoryTest {
         book.setPostedBy(savedUser);
         Book savedBook = bookRepository.save(book);
         Review review = review();
-        review.setUser(savedUser);
-        review.setBook(savedBook);
+        review.setReviewer(savedUser);
+        review.setReviewedBook(savedBook);
         reviewRepository.save(review);
 
     }
