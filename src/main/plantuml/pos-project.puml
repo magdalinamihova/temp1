@@ -1,0 +1,128 @@
+@startuml
+'TODO please format ref: https://htlspengergasse.sharepoint.com/sites/SJ2324_4EHIF/_layouts/15/stream.aspx?id=%2Fsites%2FSJ2324%5F4EHIF%2FFreigegebene%20Dokumente%2FPOS1%5FJava%2FRecordings%2FMeeting%20in%20%5FPOS1%5FJava%5F%2D20230927%5F080959%2DMeeting%20Recording%2Emp4
+'TODO please change where needed according to class definitions
+left to right direction
+
+enum UserRole {
+  ADMIN
+  STANDARD
+}
+
+entity BorrowRecord {
+  -borrower: User
+  -borrowedBook: Book
+  -borrowDate: Date
+  -returnDate: Date?
+}
+
+entity Review {
+  -user: User
+  -book: Book
+  -rating: float
+  -comment: string
+  -reviewDate: Date
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+entity Book {
+  -bookTitle: string
+  -author: string
+  -bookDescription: string
+  -genre: string
+  -language: string
+  -bookCover: Photo
+  -hardCover: boolean
+  -postedBy: User
+  -dueDate: Date?
+  -status: BookStatus
+  -rating: float
+  -reviews: Set<Review>?
+}
+
+entity User {
+  -username: string
+  -firstName: string
+  -lastName: string
+  -email: string
+  -password: string
+  -gender: Gender
+  -role: UserRole
+  -profilePic: Photo
+  -phoneNumber: string
+  -address: string
+'  -memberOf: Set<ReadingGroup>?
+  -groupsOwned: Set<ReadingGroup>
+}
+
+entity ReadingGroup {
+  -name: string
+  -description: string
+'  -groupMembers: Set<User>
+'  -numOfMembers: int
+  -creationDate: Date
+  -createdBy: User
+  -booksPosted: Set<Book>?
+'  -booksAvailable: Set<Book>? will be methods
+'  -booksBorrowed: Set<Book>?
+  -joinRequests: Set<MembershipRequest>?
+}
+
+
+
+class MembershipRequest << (V,#229988) Embedable>> {
+  -user: User
+  -readingGroup: ReadingGroup
+  -requestDate: Date
+  -status: RequestStatus
+}
+
+enum BookStatus {
+  AVAILABLE
+  BORROWED
+  MUST_BE_RETURNED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNKNOWN
+  OTHER
+}
+
+class Membership << (V,#229988) Embedable>>{
+  -user: User
+  -readingGroup: ReadingGroup
+  -joinDate: Date
+}
+
+class Photo << (V,#229988) Embedable>> {
+  -name: string
+  -description: string
+  -width: int
+  -height:int
+  -fileType: string
+}
+
+User .. UserRole : has a role
+User .. Photo : is a profilePic
+User .. Gender : has a gender
+User "1" -- "n" Book : > owns
+ReadingGroup <-- Book : < is included
+ReadingGroup "n" -- "1" User : < is created By
+BorrowRecord -- User : borrower
+BorrowRecord -- Book : borrowed book
+Book -- Review : has reviews
+User "1" -- "n" Review : writes reviews
+User "1" -- "n" Membership : has memberships
+ReadingGroup "1" -- "n" Membership : has memberships
+MembershipRequest "n" -- "1" User : requested by
+MembershipRequest "n" -- "1" ReadingGroup : requested for
+Book .. BookStatus : has status
+MembershipRequest .. RequestStatus : has status
+
+@enduml
