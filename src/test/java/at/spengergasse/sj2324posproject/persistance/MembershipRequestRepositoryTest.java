@@ -1,6 +1,5 @@
 package at.spengergasse.sj2324posproject.persistance;
 
-import at.spengergasse.sj2324posproject.domain.entities.Membership;
 import at.spengergasse.sj2324posproject.domain.entities.MembershipRequest;
 import at.spengergasse.sj2324posproject.domain.entities.ReadingGroup;
 import at.spengergasse.sj2324posproject.domain.entities.User;
@@ -9,10 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static at.spengergasse.sj2324posproject.persistance.domain.TestFixtures.*;
-import static at.spengergasse.sj2324posproject.persistance.domain.TestFixtures.readingGroup;
+import static at.spengergasse.sj2324posproject.domain.TestFixtures.*;
+import static at.spengergasse.sj2324posproject.domain.TestFixtures.readingGroup;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class MembershipRequestRepositoryTest {

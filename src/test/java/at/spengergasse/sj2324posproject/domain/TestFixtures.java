@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.persistance.domain;
+package at.spengergasse.sj2324posproject.domain;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.*;
@@ -8,7 +8,6 @@ import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-//TODO find a way to test the sets as well e.g. Set<Reviews> reviews in Book
 @DataJpaTest
 public class TestFixtures {
 

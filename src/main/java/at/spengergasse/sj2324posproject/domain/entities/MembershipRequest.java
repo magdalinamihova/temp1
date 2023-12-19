@@ -14,7 +14,6 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 
-//TODO implement
 @Entity
 @Table(name="membershipRequests")
 public class MembershipRequest extends AbstractPersistable<Long> {

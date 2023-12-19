@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static at.spengergasse.sj2324posproject.persistance.domain.TestFixtures.*;
+import static at.spengergasse.sj2324posproject.domain.TestFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
