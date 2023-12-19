@@ -3,6 +3,7 @@ package at.spengergasse.sj2324posproject.persistance.domain;
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.*;
 import at.spengergasse.sj2324posproject.domain.enums.*;
+import at.spengergasse.sj2324posproject.domain.records.Email;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 //TODO find a way to test the sets as well e.g. Set<Reviews> reviews in Book
@@ -33,8 +34,8 @@ public class TestFixtures {
         return User.builder()
                 .username("josie")
                 .firstName("Josette")
-                .lastName("Saltzman")
-                .email("josie@developers.org")
+                .lastName("March")
+                .email(Email.of("josie@developers.org"))
                 .password("jos123")
                 .phoneNumber("test")
                 .address("test")
@@ -49,7 +50,7 @@ public class TestFixtures {
                 .username("brooke")
                 .firstName("brooke")
                 .lastName("thompson")
-                .email("brooke@developers.org")
+                .email(Email.of("brooke@developers.org"))
                 .password("bro123")
                 .phoneNumber("test")
                 .address("test")

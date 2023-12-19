@@ -1,10 +1,14 @@
 package at.spengergasse.sj2324posproject.domain.records;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-public record Email(String value)  {
+public record Email(@NotEmpty @NotBlank String value)  {
     public static final int length = 64;
 
     public static final Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);

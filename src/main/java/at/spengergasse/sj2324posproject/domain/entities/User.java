@@ -5,6 +5,7 @@ import at.spengergasse.sj2324posproject.domain.enums.UserRole;
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -20,26 +21,34 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 public class User extends AbstractPersistable<Long> {
-    @Column(length = 64, nullable = false)
-    private @NotNull @NotEmpty String username;
-    @Column(length = 256, nullable = false)
-    private  @NotNull @NotEmpty String firstName;
-    @Column(length = 256, nullable = false)
-    private  @NotNull @NotEmpty String lastName;
-    @Column(length = 256, nullable = false)
-
-    private  @NotNull @NotEmpty String password;
-    //TODO Implement email rich-type, phoneNumber class, Address class. for ref: https://htlspengergasse.sharepoint.com/sites/SJ2324_4EHIF/_layouts/15/stream.aspx?id=%2Fsites%2FSJ2324%5F4EHIF%2FFreigegebene%20Dokumente%2FPOS1%5FJava%2FRecordings%2FMeeting%20in%20%5FPOS1%5FJava%5F%2D20231006%5F080431%2DMeeting%20Recording%2Emp4
     @Column(length = 64)
-     private  @NotNull @NotEmpty String email;
+    private @NotNull @NotEmpty @NotBlank String username;
+
+    @Column(length = 32)
+    private  @NotNull @NotEmpty @NotBlank String firstName;
+
+    @Column(length = 64)
+    private  @NotNull @NotEmpty @NotBlank String lastName;
+
+    @Column(length = 256)
+    private  @NotNull @NotEmpty @NotBlank String password;
+
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "email", length = 64))
+    private @NotNull Email email;
+
     @Column(length = 32)
     private String phoneNumber;
+
     @Column(length = 256)
     private String address;
+
     @Column(columnDefinition = "CHAR(1) CHECK(gender in ('f','m','o','u'))")
     private Gender gender;
+
     @Column(columnDefinition = "CHAR(1) CHECK(user_role in ('A','S'))")
     private UserRole userRole;
+
     @Embedded
     private Photo profilePic;
 
