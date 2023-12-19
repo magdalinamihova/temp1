@@ -6,7 +6,6 @@ import jakarta.persistence.Converter;
 
 import java.util.Optional;
 
-//TODO: TEST
 @Converter(autoApply = true)
 public class EmailConverter implements AttributeConverter<Email, String> {
     @Override
