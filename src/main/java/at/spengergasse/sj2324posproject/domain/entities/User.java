@@ -3,7 +3,9 @@ package at.spengergasse.sj2324posproject.domain.entities;
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.enums.UserRole;
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
+import at.spengergasse.sj2324posproject.domain.records.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
+import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -37,11 +39,13 @@ public class User extends AbstractPersistable<Long> {
     @AttributeOverride(name = "value", column = @Column(name = "email", length = 64))
     private @NotNull Email email;
 
-    @Column(length = 32)
-    private String phoneNumber;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "phone_number"))
+    private PhoneNumber phoneNumber;
 
-    @Column(length = 256)
-    private String address;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "address"))
+    private Address address;
 
     @Column(columnDefinition = "CHAR(1) CHECK(gender in ('f','m','o','u'))")
     private Gender gender;

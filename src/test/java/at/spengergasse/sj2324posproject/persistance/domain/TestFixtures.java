@@ -3,7 +3,9 @@ package at.spengergasse.sj2324posproject.persistance.domain;
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.*;
 import at.spengergasse.sj2324posproject.domain.enums.*;
+import at.spengergasse.sj2324posproject.domain.records.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
+import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 //TODO find a way to test the sets as well e.g. Set<Reviews> reviews in Book
@@ -37,8 +39,8 @@ public class TestFixtures {
                 .lastName("March")
                 .email(Email.of("josie@gmail.com"))
                 .password("jos123")
-                .phoneNumber("test")
-                .address("test")
+                .phoneNumber(PhoneNumber.of("+43123456789"))
+                .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
                 .userRole(UserRole.STANDARD)
                 .profilePic(profilePic())
@@ -52,8 +54,8 @@ public class TestFixtures {
                 .lastName("thompson")
                 .email(Email.of("brooke@gmail.com"))
                 .password("bro123")
-                .phoneNumber("test")
-                .address("test")
+                .phoneNumber(PhoneNumber.of("+43123456789"))
+                .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
                 .userRole(UserRole.STANDARD)
                 .profilePic(profilePic())
