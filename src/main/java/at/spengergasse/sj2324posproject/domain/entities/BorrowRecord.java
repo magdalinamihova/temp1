@@ -29,9 +29,7 @@ public class BorrowRecord extends AbstractPersistable<Long> {
     @PreUpdate
     private void prePersist() {
         this.borrowDate = new Date();
-        if (borrowDate != null) {
             returnDate = new Date(borrowDate.getTime() + (30 * 24 * 60 * 60 * 1000));
-        }
     }
 
 }
