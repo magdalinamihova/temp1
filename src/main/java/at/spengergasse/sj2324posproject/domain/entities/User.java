@@ -15,10 +15,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import java.util.Set;
 
+import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 
 @Entity
 @Table(name="users")
@@ -51,7 +51,7 @@ public class User extends AbstractPersistable<Long> {
     private Gender gender;
 
     @Column(columnDefinition = "CHAR(1) CHECK(user_role in ('A','S'))")
-    private UserRole userRole;
+    private @NotNull UserRole userRole;
 
     @Embedded
     private Photo profilePic;
@@ -64,5 +64,26 @@ public class User extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "member")
     private Set<Membership> memberships;
 
+    @Builder
+    public User(
+            String username, String firstName, String lastName,
+            String password, Email email, PhoneNumber phoneNumber,
+            Address address, Gender gender, UserRole userRole, Photo profilePic,
+            Set<ReadingGroup> groupsOwned, Set<Review> reviews, Set<Membership> memberships
+    ) {
+        this.username = isNotNull(username, "username");
+        this.firstName = isNotNull(firstName, "firstName");
+        this.lastName = isNotNull(lastName, "lastName");
+        this.password = isNotNull(password, "password");
+        this.email = isNotNull(email, "email");
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.gender = gender;
+        this.userRole = isNotNull(userRole, "userRole");
+        this.profilePic = profilePic;
+        this.groupsOwned = groupsOwned;
+        this.reviews = reviews;
+        this.memberships = memberships;
+    }
 
 }

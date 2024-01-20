@@ -38,4 +38,6 @@ class ReadingGroupRepositoryTest {
     void ensureFindByNameWorks() {
         assertThat(readingGroupRepository.findByName("Book Club 1")).isPresent();
     }
-}
+    }
+
+

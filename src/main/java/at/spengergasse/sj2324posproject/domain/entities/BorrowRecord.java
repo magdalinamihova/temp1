@@ -8,8 +8,6 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 
 @Entity
 @Table(name="borrowRecords")
@@ -24,6 +22,14 @@ public class BorrowRecord extends AbstractPersistable<Long> {
     private User borrower;
     @ManyToOne
     private Book borrowedBook;
+
+    @Builder
+    public BorrowRecord(Date borrowDate, Date returnDate, User borrower, Book borrowedBook) {
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+        this.borrower = borrower;
+        this.borrowedBook = borrowedBook;
+    }
 
     @PrePersist
     @PreUpdate

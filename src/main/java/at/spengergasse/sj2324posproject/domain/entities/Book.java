@@ -12,10 +12,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import java.util.Date;
 import java.util.Set;
 
+import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 
 @Entity
 @Table(name = "books")
@@ -30,7 +30,7 @@ public class Book extends AbstractPersistable<Long> {
     private Language language;
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String genre;
-    @Embedded
+    @Embedded @NotNull
     private Photo bookCover;
     @Column
     private boolean hardCover;
@@ -45,8 +45,29 @@ public class Book extends AbstractPersistable<Long> {
     @ManyToOne
     private User postedBy;
 
+    @Builder
+    public Book(
+            String bookTitle, String author, String bookDescription,
+            Language language, String genre, Photo bookCover, boolean hardCover,
+            Date dueDate, Set<Review> reviews, User postedBy
+    ) {
+        this.bookTitle = isNotNull(bookTitle, "bookTitle");
+        this.author = isNotNull(author, "author");
+        this.bookDescription = isNotNull(bookDescription, "bookDescription");
+        this.language = language;
+        this.genre = isNotNull(genre, "genre");
+        this.bookCover = isNotNull(bookCover, "bookCover");
+        this.hardCover = hardCover;
+        this.dueDate = dueDate;
+        this.reviews = reviews;
+        this.postedBy = postedBy;
+        this.bookStatus = BookStatus.AVAILABLE;
+    }
+
     @PrePersist
     private void prePersist() {
         this.bookStatus=BookStatus.AVAILABLE;
     }
+
 }
+

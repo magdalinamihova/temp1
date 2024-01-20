@@ -11,8 +11,6 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 
 @Entity
 @Table(name="membershipRequests")
@@ -28,8 +26,19 @@ public class MembershipRequest extends AbstractPersistable<Long> {
     @ManyToOne
     private ReadingGroup requestedReadingGroup;
 
+    @Builder
+    public MembershipRequest(Date requestDate, RequestStatus status, User requestingUser, ReadingGroup requestedReadingGroup) {
+        this.requestDate = requestDate;
+        this.status = status;
+        this.requestingUser = requestingUser;
+        this.requestedReadingGroup = requestedReadingGroup;
+    }
+
     @PrePersist
     private void prePersist() {
         this.requestDate = new Date();
     }
+
+
+
 }
