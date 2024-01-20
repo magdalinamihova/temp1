@@ -40,7 +40,7 @@
         request_date timestamp(6),
         requested_reading_group_id bigint,
         requesting_user_id bigint,
-        status varchar(1) CHECK(user_role in ('A','P',R)),
+        request_status varchar(1) CHECK(request_status in ('A','P','R')),
         primary key (id)
     );
 

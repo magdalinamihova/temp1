@@ -19,7 +19,7 @@ import java.util.Date;
 public class MembershipRequest extends AbstractPersistable<Long> {
     @Column @Temporal(TemporalType.TIMESTAMP)
     private Date requestDate;
-    @Column(columnDefinition = "CHAR(1) CHECK(user_role in ('A','P',R))")
+    @Column(columnDefinition = "CHAR(1) CHECK(request_status in ('A','P','R'))")
     private RequestStatus status;
 
     //RELATIONSHIPS
