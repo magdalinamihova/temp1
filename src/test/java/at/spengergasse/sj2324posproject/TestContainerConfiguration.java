@@ -16,10 +16,18 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration(proxyBeanMethods = false)
 public class TestContainerConfiguration {
 
+    final Integer localPort = 25432;
+    final Integer containerPort = 5432;
+
     @Bean
     @ServiceConnection
     PostgreSQLContainer<?> postgresContainer() {
-        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1-alpine"));
+        return new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1-alpine"))
+                .withCreateContainerCmdModifier(cmd -> {
+                    cmd.withName("sj2324-pos-postgres");
+                    cmd.withHostConfig(new HostConfig().withPortBindings(new PortBinding(Ports.Binding.bindPort(localPort), new ExposedPort(containerPort))));
+                })
+                .withReuse(true);
     }
 
 }
