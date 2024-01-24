@@ -31,11 +31,12 @@ public class BorrowRecord extends AbstractPersistable<Long> {
         this.borrowedBook = borrowedBook;
     }
 
+    // TODO these annotations are cool, but actually imho not the right place for create business relevant dates ...
+    // TODO I'd keep that logic/assignment in the service layer
     @PrePersist
     @PreUpdate
     private void prePersist() {
         this.borrowDate = new Date();
             returnDate = new Date(borrowDate.getTime() + (30 * 24 * 60 * 60 * 1000));
     }
-
 }
