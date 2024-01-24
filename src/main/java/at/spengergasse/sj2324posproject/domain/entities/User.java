@@ -56,6 +56,7 @@ public class User extends AbstractPersistable<Long> {
     @Embedded
     private Photo profilePic;
 
+    //#TODO nice ... still missing cascade options
     //RELATIONSHIPS
     @OneToMany(mappedBy = "createdBy")
     private Set<ReadingGroup> groupsOwned;
