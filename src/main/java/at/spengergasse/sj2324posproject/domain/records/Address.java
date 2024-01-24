@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 public record Address(
-        @NotBlank @NotEmpty String street,
-        @NotBlank @NotEmpty String city,
-        @NotBlank @NotEmpty String postalCode,
-        @NotBlank @NotEmpty String country
+        @NotBlank String street,
+        @NotBlank String city,
+        @NotBlank String postalCode,
+        @NotBlank String country
 ) {
     public Address {
         Objects.requireNonNull(street);

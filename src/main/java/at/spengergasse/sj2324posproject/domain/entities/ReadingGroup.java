@@ -47,6 +47,7 @@ public class ReadingGroup extends AbstractPersistable<Long> {
         this.creationDate = new Date();
     }
 
+    //#TODO why commented out?
 //    public void addMembershipRequest(MembershipRequest membershipRequest) {
 //        membershipRequest.setRequestedReadingGroup(this);
 //        membershipRequest.setStatus(RequestStatus.PENDING);
