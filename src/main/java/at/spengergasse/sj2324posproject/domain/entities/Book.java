@@ -68,6 +68,5 @@ public class Book extends AbstractPersistable<Long> {
     private void prePersist() {
         this.bookStatus=BookStatus.AVAILABLE;
     }
-
 }
 
