@@ -22,20 +22,28 @@ import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
 public class Book extends AbstractPersistable<Long> {
     @Column(length = 256, nullable = false)
     private @NotNull @NotEmpty String bookTitle;
+
     @Column(length = 256, nullable = false)
     private @NotNull @NotEmpty String author;
+
     @Column(nullable = false)
     private @NotNull @NotEmpty String bookDescription;
+
     @Column(columnDefinition = "CHAR(2) CHECK(language in ('EN','DE','FR','ES','IT','PT','NL','RU','PL','SV','NO','DA','FI','EL','CS','HU','RO','BG','SR','HR','BS','SK','SL'))")
     private Language language;
+
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String genre;
+
     @Embedded @NotNull
     private Photo bookCover;
+
     @Column
     private boolean hardCover;
+
     @Column @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
+
     @Column(columnDefinition = "CHAR(3) CHECK(book_status in ('AVL','BRW','MBR'))")
     private BookStatus bookStatus;
 

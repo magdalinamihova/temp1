@@ -1,0 +1,62 @@
+# Logging
+
+## Logging Frameworks
+
+- Apache Log4j (don't use that anymore)
+- java.until.logging (JDK 1.4) - nobody uses that
+- commons.logging (Facade) (don't use that anymore)
+- *Logback* (Ceki Gülcü)
+- *SLF4J* - Simple Logging Facade 4 Java
+- *Log4j2* - Good Choice
+
+## Log Levels
+
+[cols="20,80"]
+|===
+| Level | Content
+
+| NONE (virtual) | All logging turned off
+| FATAL / SEVERE | Save what's worth saving, shut down application
+| ERROR | Save what's possible, gracefully shut down or (if agreed upon) try to recover
+| WARN | Impact only for one user/group, rest works fine - easy to recover from
+| INFO | Business facts / Compliance
+| DEBUG | Where and when I am in my execution flow, minimal data logging (just for identification)
+| TRACE | Values, values, ... try to limit the number of log messages
+| ALL (virtual) | All logging turned on
+|===
+
+## Logger declaration
+
+[source,java]
+----
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger dataQualityLogger = LoggerFactory.getLogger("DATA QUALITY");
+----
+
+[source,java]
+----
+    @Slf4j // or
+    @Log4j2
+    public class Service {}
+----
+
+## Logger Hierarchy
+
+. ROOT logger
+. Package loggers (e.g. at.spengergasse)
+. Class loggers (e.g. at.spengergasse.sj2324posproject.service.BookService)
+. Named loggers (e.g. "DataQuality", "Security")
+
+## Log Formats (aka Layouts)
+
+- TEXT
+- JSON
+
+## Logger Outputs (aka Appenders)
+
+- Console (default)
+- Files
+- Databases
+- Network
+- Mail
+- Implement your very own
