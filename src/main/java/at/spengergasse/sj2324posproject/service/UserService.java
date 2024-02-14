@@ -1,7 +1,13 @@
 package at.spengergasse.sj2324posproject.service;
 
+import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
+import at.spengergasse.sj2324posproject.domain.entities.Book;
 import at.spengergasse.sj2324posproject.domain.entities.User;
+import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
+import at.spengergasse.sj2324posproject.domain.enums.Language;
+import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import at.spengergasse.sj2324posproject.persistence.UserRepository;
+import at.spengergasse.sj2324posproject.persistence.exception.UserAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,18 +24,25 @@ import java.util.Optional;
 @Log4j2
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class UserService {
+    private final UserRepository userRepository;
 
-    // private static final Logger logger = LoggerFactory.getLogger(UserService.class); // don't do that anymore
-    // private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    public User register(String username, String firstName, String lastName, String password, String email) {
+        log.debug("Check if user {} exists", username);
+        var userExists = userRepository.findByUsername(username);
 
-    private final UserRepository repository;
+        if (userExists.isPresent()) {
+            log.warn("User {} exists, so throw an exception", username);
+            throw new UserAlreadyExistsException(username);
+        }
 
-    public List<User> fetchUsers(Optional<String> username) {
-        return username.map(repository::findAllByUsername)
-                .orElseGet(repository::findAll);
+        // todo create and save
+        log.info("Create user {}", username); // TODO
+
+        // create, link and save token
+        log.info("Created registration confirmation token {} for user {}", "abc", username);
+
+        return null; // todo
     }
-
-    public Optional<User> findByUsername(String username) { return repository.findByUsername(username);}
 }

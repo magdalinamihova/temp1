@@ -1,0 +1,7 @@
+### all books
+GET http://localhost:8080/api/books
+Accept: application/json
+
+### book with bookTitle like Little Women
+GET http://localhost:8080/api/book?bookTitleLike=Lit
+Accept: application/json

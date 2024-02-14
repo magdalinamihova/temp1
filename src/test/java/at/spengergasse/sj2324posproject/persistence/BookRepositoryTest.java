@@ -37,7 +37,7 @@ class BookRepositoryTest {
 
     @Test
     void ensureFindByBookTitleWorks(){
-        assertThat(bookRepository.findByBookTitle("Little Women")).isPresent();
+        assertThat(bookRepository.findByBookTitleIgnoreCase("Little Women")).isPresent();
     }
 
 }

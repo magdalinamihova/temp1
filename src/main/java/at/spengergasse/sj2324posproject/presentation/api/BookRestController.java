@@ -1,9 +1,7 @@
 package at.spengergasse.sj2324posproject.presentation.api;
 
-import at.spengergasse.sj2324posproject.domain.entities.User;
-import at.spengergasse.sj2324posproject.persistence.UserRepository;
-import at.spengergasse.sj2324posproject.presentation.api.dtos.UserDto;
-import at.spengergasse.sj2324posproject.service.UserService;
+import at.spengergasse.sj2324posproject.presentation.api.dtos.BookDto;
+import at.spengergasse.sj2324posproject.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +16,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 
 @RestController
-@RequestMapping("/api/users")
-public class UserRestController {
-    private final UserService service;
+@RequestMapping("/api/books")
+public class BookRestController {
+
+    private final BookService service;
 
     @GetMapping
-    public HttpEntity<List<UserDto>> getUsers(@RequestParam Optional<String> username) {
-        List<UserDto> returnValue = service.fetchUsers(username)
+    public HttpEntity<List<BookDto>> getBooks(@RequestParam Optional<String> bookTitleLike) {
+        List<BookDto> returnValue = service.fetchBooks(bookTitleLike)
                     .stream()
-                    .map(UserDto::new)
+                    .map(BookDto::new)
                     .toList();
 
         return (returnValue.isEmpty())

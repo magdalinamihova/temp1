@@ -60,8 +60,10 @@ public class User extends AbstractPersistable<Long> {
     //RELATIONSHIPS
     @OneToMany(mappedBy = "createdBy")
     private Set<ReadingGroup> groupsOwned;
+
     @OneToMany(mappedBy = "reviewer")
     private Set<Review> reviews;
+
     @OneToMany(mappedBy = "member")
     private Set<Membership> memberships;
 

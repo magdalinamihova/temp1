@@ -1,0 +1,104 @@
+# REST
+
+## History
+
+Doctoral thesis of Dr. Roy Fielding (late '90s, early '2000)
+
+## REST Definition
+
+- *Re* presentational
+- *S* tate
+- *T* ransfer
+
+## Common mistake
+
+REST vs RESTful
+
+## HTTP methods (aka verbs)
+
+- GET (Read)
+- POST (Create)
+- PUT (Replace)
+- PATCH (Update)
+- DELETE (Delete)
+- HEAD (used by proxy)
+
+- OPTION
+- CONNECT
+- TRACE
+
+### HTTP History
+
+Purpose: Transport Hypertext Markup Language Documents, created for exchange of academic papers
+
+Sir Tim Berners Lee
+
+CERN Institute
+
+## REST vs RPCs etc.
+
+### Richardson Maturity Model
+
+- 0 Swamp of POX
+- 1 URIs (remote procedure calls)
+- 2 HTTP (leverage HTTP methods)
+- 3 Hypermedia (HAL, Hateoas)
+
+### REST API Design
+
+-> APIGee
+
+- /api/books
+- /api/books/{key}
+
+|===
+|HTTP methods | /api/books | /api/books/{key}
+
+|GET | Read Book[] | Read Book
+|POST | Create | n/a
+|PUT | ? (n/a) | Replace*
+|PATCH | n/a | Update
+|DELETE | ? (n/a) | Delete*
+|===
+
+* Idempotency
+
+Complexity of Queries (e.g. Genre) -> QueryString
+
+QueryString: everything behind ?
+
+Resource names: nouns, plural
+Operation names: verbs
+
+## Operations should be mapped to routes with verbs
+
+/api/bookStatus/AVL
+/api/bookStatus/convert?source=AVL&target=BRW
+
+## HTTP Status Codes
+
+* 100s ... informal
+* 200s ... OKish
+* 300s ... redirects temp/perm
+* 400s ... Client errors
+* 500s ... Server errors
+* 900s ... custom
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status[See Details as MDN]
+
+### The ones to remember
+
+- 200 OK
+- 201 Created
+- 204 No Content
+
+- 301 Moved permanently (SEO)
+- 307 Redirect temporarily
+- 308 Redirect permanently
+
+- 401 Unauthorized
+- 403 Forbidden (-> 404)
+- 404 Not Found
+- 405 Method not allowed
+
+- 500 Internal Server Error (no stacktrace has to be exposed)
