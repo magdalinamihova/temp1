@@ -23,8 +23,8 @@ import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
 @Entity
 @Table(name="users")
 public class User extends AbstractPersistable<Long> {
-    @Column(length = 64)
-    private @NotNull @NotEmpty @NotBlank String username;
+    @Column(name = "username", length = 64)
+    private @NotNull @NotEmpty @NotBlank String userName;
 
     @Column(length = 32)
     private  @NotNull @NotEmpty @NotBlank String firstName;
@@ -69,12 +69,12 @@ public class User extends AbstractPersistable<Long> {
 
     @Builder
     public User(
-            String username, String firstName, String lastName,
+            String userName, String firstName, String lastName,
             String password, Email email, PhoneNumber phoneNumber,
             Address address, Gender gender, UserRole userRole, Photo profilePic,
             Set<ReadingGroup> groupsOwned, Set<Review> reviews, Set<Membership> memberships
     ) {
-        this.username = isNotNull(username, "username");
+        this.userName = isNotNull(userName, "userName");
         this.firstName = isNotNull(firstName, "firstName");
         this.lastName = isNotNull(lastName, "lastName");
         this.password = isNotNull(password, "password");

@@ -2,9 +2,12 @@ package at.spengergasse.sj2324posproject.presentation.api;
 
 import at.spengergasse.sj2324posproject.presentation.api.dtos.BookDto;
 import at.spengergasse.sj2324posproject.service.BookService;
+import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,9 +49,15 @@ public class BookRestController {
     @GetMapping(PATH_GET_BOOK)
     public HttpEntity<BookDto> getBook(@PathVariable String bookTitle) {
         log.debug("searching book with bookTitle: {}", bookTitle);
-        return service.findByBookTitle(bookTitle)
-                    .map(BookDto::new)
-                    .map(ResponseEntity::ok)
-                    .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(new BookDto(service.getByBookTitle(bookTitle)));
     }
+
+    /*@ExceptionHandler(BookNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public HttpEntity<ProblemDetail> handleBookNotFoundException(BookNotFoundException bnfEx) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, bnfEx.getMessage());
+        problemDetail.setProperty("book-key", bnfEx.getKey());
+        // problemDetail.setType();
+        return ResponseEntity.of(problemDetail).build();
+    }*/
 }
