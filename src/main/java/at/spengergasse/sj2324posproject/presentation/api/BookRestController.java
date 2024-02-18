@@ -26,7 +26,7 @@ public class BookRestController {
     protected static final String BASE_ROUTE = APIBase.API + "/books";
     protected static final String PATH_VAR_BOOKTITLE = "{bookTitle}";
     protected static final String PATH_GET_BOOK = _SLASH + PATH_VAR_BOOKTITLE;
-    protected static final String GET_BOOK_ROUTE = BASE_ROUTE + _SLASH + PATH_GET_BOOK;
+    protected static final String GET_BOOK_ROUTE = BASE_ROUTE + PATH_GET_BOOK;
 
     private final BookService service;
 

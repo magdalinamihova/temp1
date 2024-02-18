@@ -100,7 +100,7 @@ public class BookRestControllerTest {
         when(bookService.findByBookTitle(any())).thenReturn(Optional.empty());
 
         // expect
-        var request = get(BookRestController.GET_BOOK_ROUTE, "Little Women").accept(MediaType.APPLICATION_JSON);
+        var request = get(BookRestController.GET_BOOK_ROUTE, "The Great Gatsby").accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(request)
                 .andExpect(status().isNotFound())
                 .andDo(print());
