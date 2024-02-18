@@ -97,8 +97,6 @@ public class BookRestControllerTest {
     @Test
     void ensureGetBookRespondsWithStatusNotFoundWhenProvidedABookTitleAndNoDataIsAvailable() throws Exception {
         // given
-        var user = user();
-        var book = TestFixtures.book(user);
         when(bookService.findByBookTitle(any())).thenReturn(Optional.empty());
 
         // expect

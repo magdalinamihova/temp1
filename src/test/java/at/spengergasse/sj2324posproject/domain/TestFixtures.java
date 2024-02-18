@@ -41,7 +41,7 @@ public class TestFixtures {
                 .phoneNumber(PhoneNumber.of("+43123456789"))
                 .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
-                .userRole(UserRole.STANDARD)
+                .userRole(UserRole.ADMIN)
                 .profilePic(profilePic())
                 .build();
     }

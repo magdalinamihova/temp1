@@ -23,8 +23,8 @@ import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
 @Entity
 @Table(name="users")
 public class User extends AbstractPersistable<Long> {
-    @Column(name = "username", length = 64)
-    private @NotNull @NotEmpty @NotBlank String userName;
+    @Column(length = 64)
+    private @NotNull @NotEmpty @NotBlank String username;
 
     @Column(length = 32)
     private  @NotNull @NotEmpty @NotBlank String firstName;
@@ -67,14 +67,29 @@ public class User extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "member")
     private Set<Membership> memberships;
 
+    /*@Builder
+    public User(String username, String firstName, String lastName, String password, Email email, UserRole userRole) {
+        this(username, firstName, lastName, password, email, userRole);
+    }*/
+
+    /*@Builder
+    public User(String username, String firstName, String lastName, String password, Email email, UserRole userRole) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.userRole = userRole;
+    }*/
+
     @Builder
     public User(
-            String userName, String firstName, String lastName,
+            String username, String firstName, String lastName,
             String password, Email email, PhoneNumber phoneNumber,
             Address address, Gender gender, UserRole userRole, Photo profilePic,
             Set<ReadingGroup> groupsOwned, Set<Review> reviews, Set<Membership> memberships
     ) {
-        this.userName = isNotNull(userName, "userName");
+        this.username = isNotNull(username, "username");
         this.firstName = isNotNull(firstName, "firstName");
         this.lastName = isNotNull(lastName, "lastName");
         this.password = isNotNull(password, "password");

@@ -46,18 +46,9 @@ public class BookRestController {
         return response;
     }
 
-    @GetMapping(PATH_GET_BOOK)
+    @GetMapping(GET_BOOK_ROUTE)
     public HttpEntity<BookDto> getBook(@PathVariable String bookTitle) {
         log.debug("searching book with bookTitle: {}", bookTitle);
         return ResponseEntity.ok(new BookDto(service.getByBookTitle(bookTitle)));
     }
-
-    /*@ExceptionHandler(BookNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public HttpEntity<ProblemDetail> handleBookNotFoundException(BookNotFoundException bnfEx) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, bnfEx.getMessage());
-        problemDetail.setProperty("book-key", bnfEx.getKey());
-        // problemDetail.setType();
-        return ResponseEntity.of(problemDetail).build();
-    }*/
 }
