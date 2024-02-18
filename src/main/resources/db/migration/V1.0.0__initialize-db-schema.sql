@@ -1,4 +1,3 @@
-
     create sequence books_seq start with 1 increment by 50;
     create sequence borrow_records_seq start with 1 increment by 50;
     create sequence membership_requests_seq start with 1 increment by 50;
@@ -142,4 +141,3 @@
        add constraint FKd1isgfajhtdl8mgg29up6mofi 
        foreign key (reviewer_id) 
        references users;
-

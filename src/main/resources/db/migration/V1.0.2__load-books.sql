@@ -1,0 +1,4 @@
+INSERT INTO books (hard_cover, height, width, due_date, id, posted_by_id, genre, name, author, book_title, description, book_description, book_status, filetype, language)
+VALUES (true, 175, 70, '2024-03-27 15:20:10.987654', nextval('books_seq'), 1, 'Period piece', 'little women cover', 'Louisa May Alcott', 'Little Women', 'Description', 'description', 'AVL', 'image/jpeg', 'EN'),
+       (false, 180, 90, '2025-01-01 08:15:10.987654', nextval('books_seq'), 51, 'Thriller', 'the housemaid cover', 'Freida McFadden', 'The Housemaid', 'Description', 'description', 'BRW', 'image/jpeg', 'EN'),
+       (true, 160, 60, '2024-10-13 20:45:10.987654', nextval('books_seq'), 101, 'Fiction', 'pride and prejudice cover', 'Jane Austen', 'Pride and Prejudice', 'Description', 'description', 'MBR', 'image/jpeg', 'EN');

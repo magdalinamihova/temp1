@@ -8,7 +8,6 @@ public class LikeSupportTest implements LikeSupport {
     @Test
     void ensureFixLikeExpressionWorks() {
         assertThat(fixLikeExpression("Li")).isEqualTo("Li%");
-        assertThat(fixLikeExpression("Li")).isEqualTo("%Li");
     }
 
 }

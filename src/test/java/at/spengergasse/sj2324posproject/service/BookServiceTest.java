@@ -1,5 +1,6 @@
 package at.spengergasse.sj2324posproject.service;
 
+import at.spengergasse.sj2324posproject.domain.TestFixtures;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,12 +29,12 @@ public class BookServiceTest {
         bookService = new BookService(bookRepository);
     }
 
-    @Test //not functioning properly
+    @Test
     void ensureFetchBooksWithNoProvidedBookTitleCallsFindAll() {
         // given
         var bookTitle = Optional.<String>empty();
-        var book = book();
-        var user1 = user1();
+        var user = user();
+        var book = TestFixtures.book(user);
         when(bookRepository.findAll()).thenReturn(List.of(book));
 
         // when
@@ -48,17 +49,17 @@ public class BookServiceTest {
     @Test
     void ensureFetchBooksWithProvidedBookTitleCallsFindAll() {
         // given
-        var bookTitle = "Little Women";
+        var bookTitle = "Li";
         var user = user();
-        var book = book(user);
-        when(bookRepository.findByBookTitleIgnoreCase(bookTitle)).thenReturn(List.of(book));
+        var book = TestFixtures.book(user);
+        when(bookRepository.findAllByBookTitleLikeIgnoreCase(bookTitle+"%")).thenReturn(List.of(book));
 
         // when
         var result = bookService.fetchBooks(Optional.of(bookTitle));
 
         // then
         assertThat(result).containsExactlyInAnyOrder(book);
-        verify(bookRepository /*, times(1)*/).findByBookTitleIgnoreCase(any());
+        verify(bookRepository /*, times(1)*/).findAllByBookTitleLikeIgnoreCase(any());
         verifyNoMoreInteractions(bookRepository);
     }
 }

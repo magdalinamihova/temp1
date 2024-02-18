@@ -2,6 +2,19 @@
 GET http://localhost:8080/api/books
 Accept: application/json
 
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+
 ### book with bookTitle like Little Women
-GET http://localhost:8080/api/book?bookTitleLike=Lit
+GET http://localhost:8080/api/books?bookTitleLike=Li
 Accept: application/json
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
