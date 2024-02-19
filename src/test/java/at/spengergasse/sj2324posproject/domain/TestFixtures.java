@@ -14,7 +14,7 @@ public class TestFixtures {
 
     public static Photo profilePic (){
         return Photo.builder()
-                .name("profilpic")
+                .name("profilepic")
                 .description("description")
                 .width(640)
                 .height(480)

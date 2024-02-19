@@ -41,5 +41,4 @@ class ReviewRepositoryTest {
     void ensureFindByCommentWorks(){
         assertThat(reviewRepository.findByComment("comment")).isPresent();
     }
-
 }

@@ -2,6 +2,7 @@ package at.spengergasse.sj2324posproject.persistence;
 
 import at.spengergasse.sj2324posproject.TestContainerConfiguration;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -42,5 +43,9 @@ class UserRepositoryTest {
         assertThat(repository.findByNamePart("jo")).isNotNull().isNotEmpty();
     }
 
-
+    @Test
+    @Disabled
+    void ensureReadAllNamesOnly(){
+        assertThat(repository.findAllByLastNameLikeIgnoreCase("M")).isNotNull();
+    }
 }

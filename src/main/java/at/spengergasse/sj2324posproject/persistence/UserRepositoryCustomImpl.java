@@ -1,9 +1,8 @@
 package at.spengergasse.sj2324posproject.persistence;
 
 import at.spengergasse.sj2324posproject.domain.entities.User;
-import at.spengergasse.sj2324posproject.domain.enums.UserProjections;
+import at.spengergasse.sj2324posproject.domain.entities.UserProjections;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
