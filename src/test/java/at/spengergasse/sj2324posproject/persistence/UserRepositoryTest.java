@@ -28,7 +28,19 @@ class UserRepositoryTest {
     }
 
     @Test
-    void ensureFindingByNicknameWorks(){
+    void ensureFindingUserByUsernameWorks(){
         assertThat(repository.findByUsername("josie")).isPresent();
     }
+
+    @Test
+    void ensureFindingByNamePartReturnsAResult(){
+        assertThat(repository.findByNamePart("jo")).isNotNull().isNotEmpty();
+    }
+
+    @Test
+    void ensureFindingOverviewByNamePartReturnsAResult(){
+        assertThat(repository.findByNamePart("jo")).isNotNull().isNotEmpty();
+    }
+
+
 }
