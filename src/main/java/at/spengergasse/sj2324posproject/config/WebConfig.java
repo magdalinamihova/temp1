@@ -6,6 +6,8 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 //import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
+// #todo RestClient -> update spring-boot!
+// #todo then ged rid of restService class
 @Configuration
 public class WebConfig {
     //public static final String BASE_URL = "https://httpbin.org";
