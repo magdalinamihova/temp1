@@ -7,6 +7,7 @@ import at.spengergasse.sj2324posproject.domain.records.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 @DataJpaTest
 public class TestFixtures {
@@ -32,32 +33,36 @@ public class TestFixtures {
     }
 
     public static User user (){
+        String key = RandomStringUtils.random(12);
         return User.builder()
                 .username("josie")
                 .firstName("Josette")
                 .lastName("March")
                 .email(Email.of("josie@gmail.com"))
-                .password("jos123")
+                .password("!VerySecret2024")
                 .phoneNumber(PhoneNumber.of("+43123456789"))
                 .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
                 .userRole(UserRole.ADMIN)
                 .profilePic(profilePic())
+                .key("abc-key")
                 .build();
     }
 
     public static User user1 (){
+        String key = RandomStringUtils.random(12);
         return User.builder()
                 .username("brooke")
                 .firstName("brooke")
                 .lastName("thompson")
                 .email(Email.of("brooke@gmail.com"))
-                .password("bro123")
+                .password("!VerySecret2024")
                 .phoneNumber(PhoneNumber.of("+43123456789"))
                 .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
                 .userRole(UserRole.STANDARD)
                 .profilePic(profilePic())
+                .key("def-key")
                 .build();
     }
 

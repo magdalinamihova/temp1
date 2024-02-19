@@ -30,13 +30,14 @@ public class UserRestControllerTest {
     @Test
     void ensureCreateUserReturnsCreatedWithLocationForValidData() throws Exception {
         // given
+        Long userId = 4711L;
         User u = spy(TestFixtures.user());
-        when(userService.register(any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(),any(), any())).thenReturn(u);
+        when(userService.register(any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(), any(),any())).thenReturn(u);
         //when(userService.register(eq(u.getUsername()), eq(u.getFirstName()), eq(u.getLastName()), eq(u.getPassword()), eq(u.getEmail()), eq(u.getUserRole(),...))).thenReturn(u);
-        when(u.getId()).thenReturn(4711L);
+        when(u.getId()).thenReturn(userId);
         CreateUserCommand cmd = new CreateUserCommand(u.getUsername(), u.getFirstName(), u.getLastName(), u.getPassword(),
-                                                      u.getEmail(), u.getUserRole(), u.getPhoneNumber(), u.getAddress(),
-                                                      u.getGender(), u.getProfilePic(), u.getGroupsOwned(),
+                                                      u.getPassword(), u.getEmail(), u.getUserRole(), u.getPhoneNumber(),
+                                                      u.getAddress(), u.getGender(), u.getProfilePic(), u.getGroupsOwned(),
                                                       u.getReviews(), u.getMemberships());
 
         // expect
@@ -49,6 +50,7 @@ public class UserRestControllerTest {
                 .andExpect(header().string(HttpHeaders.LOCATION, "/api/users/4711"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.username").value(u.getUsername()))
+                .andExpect(jsonPath("$.key").isNotEmpty())
                 .andDo(print());
     }
 }

@@ -15,12 +15,12 @@ import java.util.Set;
 
 import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
 
-public record UserDto(String username, String firstName, String lastName, Email email, UserRole userRole,
+public record UserDto(String key, String username, String firstName, String lastName, Email email, UserRole userRole,
                       PhoneNumber phoneNumber, Address address, Gender gender, Photo profilePic, Set<ReadingGroup> groupsOwned,
                       Set<Review> reviews, Set<Membership> memberships) {
 
     public UserDto(User user) {
-        this(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getUserRole(),
+        this(user.getKey(), user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getUserRole(),
                 user.getPhoneNumber(), user.getAddress(), user.getGender(), user.getProfilePic(), user.getGroupsOwned(),
                 user.getReviews(), user.getMemberships());
     }

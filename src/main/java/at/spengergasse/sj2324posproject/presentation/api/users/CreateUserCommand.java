@@ -9,17 +9,21 @@ import at.spengergasse.sj2324posproject.domain.enums.UserRole;
 import at.spengergasse.sj2324posproject.domain.records.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
+import at.spengergasse.sj2324posproject.foundation.PasswordMatching;
+import at.spengergasse.sj2324posproject.foundation.StrongPassword;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
+@PasswordMatching(confirmPasswordAttribute = "confirmPwd")
 public record CreateUserCommand(
         @NotBlank String username,
         @NotBlank String firstName,
         @NotBlank String lastName,
-        @NotBlank String password,
+        @StrongPassword String password,
+        @NotBlank String confirmPwd,
         @NotNull Email email,
         @NotNull UserRole userRole,
         @Nullable PhoneNumber phoneNumber,

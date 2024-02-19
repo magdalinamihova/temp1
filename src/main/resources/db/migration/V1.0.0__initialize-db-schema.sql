@@ -71,9 +71,10 @@
     );
 
     create table users (
+        id bigint not null,
+        user_key VARCHAR(40) UNIQUE NOT NULL,
         height integer not null,
         width integer not null,
-        id bigint not null,
         first_name varchar(32) not null,
         email varchar(64),
         last_name varchar(64) not null,

@@ -12,6 +12,7 @@ import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import at.spengergasse.sj2324posproject.persistence.UserRepository;
 import at.spengergasse.sj2324posproject.persistence.exception.UserAlreadyExistsException;
+import at.spengergasse.sj2324posproject.service.connectors.HttpBinConnector;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
@@ -19,13 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.lang.reflect.ParameterizedType;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -35,6 +36,7 @@ import java.util.Set;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordPolicy passwordPolicy;
+    private final HttpBinConnector httpBin;
 
     public User register(String username, String firstName, String lastName, String password, Email email, UserRole userRole,
                          PhoneNumber phoneNumber, Address address, Gender gender, Photo profilePic, Set<ReadingGroup> groupsOwned,
@@ -58,6 +60,7 @@ public class UserService {
                 .lastName(lastName)
                 .password(password) //  encryption here
                 .email(email)
+                .key(httpBin.retrieveKey())
                 .userRole(userRole)
                 .phoneNumber(null)
                 .address(null)
@@ -68,7 +71,7 @@ public class UserService {
                 .memberships(null)
                 .build();
         userRepository.save(user);
-        log.info("Created user {} (id={})", username, user.getId());
+        log.info("Created user {} (id={}, key={})", username, user.getId(), user.getKey());
 
         log.debug("Create registration confirmation token for user {}", username);
         // TODO
