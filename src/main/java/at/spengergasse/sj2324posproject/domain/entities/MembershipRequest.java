@@ -13,12 +13,12 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 @Entity
-@Table(name="membershipRequests")
+@Table(name="membership_requests")
 public class MembershipRequest extends AbstractPersistable<Long> {
     @Column @Temporal(TemporalType.TIMESTAMP)
     private Date requestDate;
     @Column(columnDefinition = "CHAR(1) CHECK(request_status in ('A','P','R'))")
-    private RequestStatus status;
+    private RequestStatus request_status;
 
     //RELATIONSHIPS
     @ManyToOne
@@ -27,9 +27,9 @@ public class MembershipRequest extends AbstractPersistable<Long> {
     private ReadingGroup requestedReadingGroup;
 
     @Builder
-    public MembershipRequest(Date requestDate, RequestStatus status, User requestingUser, ReadingGroup requestedReadingGroup) {
+    public MembershipRequest(Date requestDate, RequestStatus request_status, User requestingUser, ReadingGroup requestedReadingGroup) {
         this.requestDate = requestDate;
-        this.status = status;
+        this.request_status = request_status;
         this.requestingUser = requestingUser;
         this.requestedReadingGroup = requestedReadingGroup;
     }

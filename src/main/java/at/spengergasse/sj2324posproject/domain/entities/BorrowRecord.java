@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 @Entity
-@Table(name="borrowRecords")
+@Table(name="borrow_records")
 public class BorrowRecord extends AbstractPersistable<Long> {
     @Column @Temporal(TemporalType.TIMESTAMP)
     private Date borrowDate;

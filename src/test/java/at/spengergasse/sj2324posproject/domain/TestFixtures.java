@@ -107,7 +107,7 @@ public class TestFixtures {
         return MembershipRequest.builder()
                 .requestingUser(requestingUser)
                 .requestedReadingGroup(requestedRG)
-                .status(RequestStatus.APPROVED)
+                .request_status(RequestStatus.APPROVED)
                 .build();
     }
 

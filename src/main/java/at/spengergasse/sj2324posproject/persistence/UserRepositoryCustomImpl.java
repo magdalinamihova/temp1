@@ -13,7 +13,11 @@ import java.util.List;
 
 @Component
 public class UserRepositoryCustomImpl extends QuerydslRepositorySupport implements UserRepositoryCustom {
+    public UserRepositoryCustomImpl() {
+        super(User.class);;
+    }
 
+    /*
     private final SimpleJdbcCall jdbcClient;    // #todo actually JdbcClient -> spring-boot update!
     private final EntityManager em;
 
@@ -25,6 +29,7 @@ public class UserRepositoryCustomImpl extends QuerydslRepositorySupport implemen
         this.jdbcClient = jdbcClient;
         this.em = em;
     }
+    */
 
     @Override
     public List<User> findByNamePart(String namePart) {

@@ -40,7 +40,7 @@ class UserRepositoryTest {
 
     @Test
     void ensureFindingOverviewByNamePartReturnsAResult(){
-        assertThat(repository.findByNamePart("jo")).isNotNull().isNotEmpty();
+        assertThat(repository.findOverviewByNamePart("jo")).isNotNull().isNotEmpty();
     }
 
     @Test
