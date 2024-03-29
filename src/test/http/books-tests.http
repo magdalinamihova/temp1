@@ -1,0 +1,8 @@
+###book title little women
+GET http://localhost:8080/api/books?bookTitle=ToKillAMockingbird
+Accept: application/json
+
+###all books
+GET http://localhost:8080/api/books
+Accept: application/json
+
