@@ -43,16 +43,17 @@ public class BookServiceTest {
         verify(bookRepository).findAll();
         verifyNoMoreInteractions(bookRepository);
     }
+
     @Test
     void ensureFetchBooksWithProvidedBookTitleCallsFindAllByBookTitle() {
         var bookTitle = "Little Women";
         var book = book(user());
-        when(bookRepository.findAllByBookTitle(bookTitle)).thenReturn(List.of(book));
+        when(bookRepository.findAllByBookTitleLikeIgnoreCase("Little%20Women")).thenReturn(List.of(book));
 
-        var result = bookService.fetchBooks(Optional.of(bookTitle), empty());
+        var result = bookService.fetchBooks(Optional.of("Little%20Women"), empty());
 
         assertThat(result).containsExactlyInAnyOrder(book);
-        verify(bookRepository).findAllByBookTitle(any());
+        verify(bookRepository).findAllByBookTitleLikeIgnoreCase("Little%20Women");
         verifyNoMoreInteractions(bookRepository);
     }
 
@@ -65,7 +66,7 @@ public class BookServiceTest {
         var result = bookService.fetchBooks(empty(), Optional.of(language));
 
         assertThat(result).containsExactlyInAnyOrder(book);
-        verify(bookRepository).findAllByLanguage(any());
+        verify(bookRepository).findAllByLanguage(eq(Language.valueOf(String.valueOf(language))));
         verifyNoMoreInteractions(bookRepository);
     }
 
@@ -80,5 +81,4 @@ public class BookServiceTest {
         verify(bookRepository).findAll();
         verifyNoMoreInteractions(bookRepository);
     }
-
 }

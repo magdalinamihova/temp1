@@ -48,7 +48,7 @@ class BookRepositoryTest {
             System.out.println("Book Title: " + book.getBookTitle());
         }
 
-        Optional<Book> bookOptional = bookRepository.findByBookTitle("Little Women");
+        Optional<Book> bookOptional = bookRepository.findByBookTitleIgnoreCase("Little Women");
         assertThat(bookOptional).isPresent();
         assertThat(bookOptional.get().getBookTitle()).isEqualTo("Little Women");
     }

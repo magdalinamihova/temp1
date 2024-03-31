@@ -31,10 +31,10 @@ public class BookRestController {
     private final BookService service;
 
     @GetMapping
-    public HttpEntity<List<BookDto>> getBooks(@RequestParam Optional<String> bookTitle, @RequestParam Optional<String> language) {
-        log.debug("searching books with bookTitle part: {}", bookTitle);
+    public HttpEntity<List<BookDto>> getBooks(@RequestParam Optional<String> bookTitleLike, @RequestParam Optional<String> language) {
+        log.debug("searching books with bookTitle part: {}", bookTitleLike);
         List<BookDto> returnValue = service.fetchBooks(
-                        bookTitle,
+                        bookTitleLike,
                         language.map(Language::valueOf)
                 )
                 .stream()
@@ -42,7 +42,7 @@ public class BookRestController {
                 .toList();
 
         ResponseEntity response;
-        if (returnValue.isEmpty() && (bookTitle.isPresent() || language.isPresent())) {response = ResponseEntity.notFound().build();}
+        if (returnValue.isEmpty() && (bookTitleLike.isPresent() || language.isPresent())) {response = ResponseEntity.notFound().build();}
         else if (returnValue.isEmpty()) {response = ResponseEntity.noContent().build();}
         else {response = ResponseEntity.ok(returnValue);}
         return response;

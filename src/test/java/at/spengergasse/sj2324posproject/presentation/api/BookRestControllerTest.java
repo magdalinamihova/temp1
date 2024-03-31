@@ -61,15 +61,18 @@ class BookRestControllerTest {
     void ensureGetBooksRespondsWithStatusNotFoundWhenBookTitleIsProvidedAndNoDataIsAvailable() throws Exception {
         String title = "Little Women";
         var request = get(BookRestController.BASE_ROUTE)
-                .param("bookTitle", title)
+                .param("bookTitleLike", title)
                 .accept(MediaType.APPLICATION_JSON);
 
-        when(bookService.fetchBooks(eq(Optional.of(title)), any())).thenReturn(Collections.emptyList());
+        when(bookService.fetchBooks(Optional.of(title), Optional.empty())).thenReturn(Collections.emptyList());
 
         mockMvc.perform(request)
                 .andExpect(status().isNotFound())
                 .andDo(print());
     }
+
+
+
 
     @Test
     void ensureGetBooksRespondsWithStatusNotFoundWhenLanguageIsProvidedAndNoDataIsAvailable() throws Exception {

@@ -1,13 +1,13 @@
 ###get book by title
-GET http://localhost:8080/api/books/Little%20Women
+GET http://localhost:8080/api/books/The%20Hobbit
 Accept: application/json
 
 ###by language
 GET http://localhost:8080/api/books?language=GERMAN
 Accept: application/json
 
-###book title little women
-GET http://localhost:8080/api/books?bookTitle=Little%20Women
+###book title like little women
+GET http://localhost:8080/api/books?bookTitleLike=Lit
 Accept: application/json
 
 ###all books
