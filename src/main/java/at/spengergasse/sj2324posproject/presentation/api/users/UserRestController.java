@@ -1,8 +1,5 @@
-package at.spengergasse.sj2324posproject.presentation.api;
+package at.spengergasse.sj2324posproject.presentation.api.users;
 
-import at.spengergasse.sj2324posproject.domain.entities.User;
-import at.spengergasse.sj2324posproject.persistence.UserRepository;
-import at.spengergasse.sj2324posproject.presentation.api.dtos.UserDto;
 import at.spengergasse.sj2324posproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;

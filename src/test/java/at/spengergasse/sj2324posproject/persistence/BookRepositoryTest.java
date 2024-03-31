@@ -41,8 +41,15 @@ class BookRepositoryTest {
     }
 
     @Test
+    void ensureFindAllByBookTitleLikeIgnoreCaseWorks() {
+        List<Book> books = bookRepository.findAllByBookTitleLikeIgnoreCase("Little%");
+        assertThat(books).isNotEmpty();
+        assertThat(books).allMatch(book -> book.getBookTitle().toLowerCase().contains("little"));
+    }
+
+    @Test
     void ensureFindByBookTitleWorks(){
-        //TODO: find out why the repo has some other titles than Little Women if the clear method doesnt exist
+        //TODO: find out why the repo has some titles other than Little Women if the clear method doesnt exist
         List<Book> books = bookRepository.findAll();
         for (Book book : books) {
             System.out.println("Book Title: " + book.getBookTitle());
@@ -64,5 +71,17 @@ class BookRepositoryTest {
         assertThat(result).isNotEmpty();
         assertThat(result).allMatch(book -> book.getLanguage() == language);
     }
+
+    @Test
+    void ensureFindByBookTitleAndPostedByWorks() {
+        User user = userRepository.save(user());
+        Book book = book(user);
+        bookRepository.save(book);
+
+        Optional<Book> optionalBook = bookRepository.findByBookTitleAndPostedBy(book.getBookTitle(), user);
+        assertThat(optionalBook).isPresent();
+        assertThat(optionalBook.get()).isEqualTo(book);
+    }
+
 }
 

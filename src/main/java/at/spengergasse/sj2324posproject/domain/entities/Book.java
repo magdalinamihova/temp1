@@ -51,7 +51,7 @@ public class Book extends AbstractPersistable<Long> {
     // TODO: Is review set needed? We can get reviews with that specific book id
     // @OneToMany(mappedBy = "reviewedBook")
     // private Set<Review> reviews;
-    @ManyToOne
+    @ManyToOne @NotNull
     private User postedBy;
 
     @Builder

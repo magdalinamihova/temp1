@@ -1,9 +1,11 @@
 package at.spengergasse.sj2324posproject.presentation.api;
 
+import at.spengergasse.sj2324posproject.domain.entities.Book;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.presentation.api.dtos.BookDto;
 import at.spengergasse.sj2324posproject.service.BookService;
 import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
@@ -12,6 +14,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,9 +51,25 @@ public class BookRestController {
         else {response = ResponseEntity.ok(returnValue);}
         return response;
     }
+
     @GetMapping(PATH_GET_BOOK)
     public HttpEntity<BookDto> getBookByTitle(@PathVariable String bookTitle) {
         log.debug("Fetching book with title: {}", bookTitle);
         return ResponseEntity.ok(new BookDto(service.getByBookTitle(bookTitle)));
     }
+
+    @PostMapping
+    public ResponseEntity<BookDto> createBook(@RequestBody @Valid CreateBookCommand cmd){
+          Book book = service.addBook( cmd.bookTitle(),
+                    cmd.author(),
+                    cmd.bookDescription(),
+                    cmd.language(),
+                    cmd.genre(),
+                    cmd.bookCover(),
+                    cmd.hardCover(),
+                    cmd.dueDate(),
+                    cmd.postedBy());
+            URI location = URI.create("%s/%d".formatted(BASE_ROUTE, book.getId()));
+            return ResponseEntity.created(location).body(new BookDto(book));
+        }
 }

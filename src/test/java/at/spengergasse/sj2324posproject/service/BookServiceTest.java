@@ -3,6 +3,7 @@ package at.spengergasse.sj2324posproject.service;
 import at.spengergasse.sj2324posproject.domain.entities.Book;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
+import at.spengergasse.sj2324posproject.persistence.exception.BookAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import static at.spengergasse.sj2324posproject.domain.TestFixtures.*;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.mockito.Mockito.*;
 
@@ -79,6 +81,62 @@ public class BookServiceTest {
 
         assertThat(result).containsExactlyInAnyOrder(book);
         verify(bookRepository).findAll();
+        verifyNoMoreInteractions(bookRepository);
+    }
+
+    @Test
+    void ensureAddBookCallsRepositorySaveAndReturnsAddedBook() {
+        var bookTitle = "1984";
+        var author = "George Orwell";
+        var bookDescription = "A dystopian novel about the future.";
+        var language = Language.ENGLISH;
+        var genre = "Dystopian";
+        var bookCover = bookCover();
+        var hardCover = true;
+        var user = user();
+
+        var book = Book.builder()
+                .bookTitle(bookTitle)
+                .author(author)
+                .bookDescription(bookDescription)
+                .language(language)
+                .genre(genre)
+                .bookCover(bookCover)
+                .hardCover(hardCover)
+                .dueDate(null)
+                .postedBy(user)
+                .build();
+
+        when(bookRepository.findByBookTitleAndPostedBy(bookTitle, user)).thenReturn(Optional.empty());
+        when(bookRepository.save(any(Book.class))).thenReturn(book);
+
+        var result = bookService.addBook(bookTitle, author, bookDescription, language, genre, bookCover, hardCover, null, user);
+
+        assertThat(result).isEqualTo(book);
+        verify(bookRepository).findByBookTitleAndPostedBy(bookTitle, user);
+        verify(bookRepository).save(book);
+        verifyNoMoreInteractions(bookRepository);
+    }
+
+    @Test
+    void ensureAddBookThrowsExceptionWhenBookAlreadyExists() {
+        var bookTitle = "1984";
+        var author = "George Orwell";
+        var bookDescription = "A dystopian novel about the future.";
+        var language = Language.ENGLISH;
+        var genre = "Dystopian";
+        var bookCover = bookCover();
+        var hardCover = true;
+        var user = user();
+        var existingBook = book(user);
+
+        when(bookRepository.findByBookTitleAndPostedBy(bookTitle, user)).thenReturn(Optional.of(existingBook));
+
+        assertThatThrownBy(() -> bookService.addBook(bookTitle, author, bookDescription, language, genre, bookCover, hardCover, null, user))
+                .isInstanceOf(BookAlreadyExistsException.class)
+                .hasMessage("Book with title '1984' already exists!");
+
+        verify(bookRepository).findByBookTitleAndPostedBy(bookTitle, user);
         verifyNoMoreInteractions(bookRepository);
     }
 }

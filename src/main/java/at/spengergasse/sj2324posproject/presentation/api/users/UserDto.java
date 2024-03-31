@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.presentation.api.dtos;
+package at.spengergasse.sj2324posproject.presentation.api.users;
 
 import at.spengergasse.sj2324posproject.domain.entities.User;
 

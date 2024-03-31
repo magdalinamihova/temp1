@@ -1,5 +1,7 @@
 package at.spengergasse.sj2324posproject.presentation.api;
 
+import at.spengergasse.sj2324posproject.domain.TestFixtures;
+import at.spengergasse.sj2324posproject.domain.entities.Book;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.service.BookService;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
@@ -9,9 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -23,11 +26,17 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 @WebMvcTest(BookRestController.class)
 class BookRestControllerTest {
 
     private @Autowired MockMvc mockMvc;
+    private @Autowired ObjectMapper mapper;
     private @MockBean BookService bookService;
     private @MockBean BookRepository bookRepository;
 
@@ -117,5 +126,29 @@ class BookRestControllerTest {
     }
 
 
+    @Test
+    void ensureCreateBookReturnsCreatedWithLocationForValidData() throws Exception {
+        // given
+        Long bookId = 1234L;
+        Book book = spy(TestFixtures.book(user()));
+        when(bookService.addBook(any(), any(), any(), any(), any(), any(), anyBoolean(), any(), any())).thenReturn(book);
+        when(book.getId()).thenReturn(bookId);
+
+        CreateBookCommand cmd = new CreateBookCommand(book.getBookTitle(), book.getAuthor(), book.getBookDescription(),
+                book.getLanguage(), book.getGenre(), book.getBookCover(),
+                book.isHardCover(), book.getDueDate(), book.getPostedBy());
+
+        // expect
+        var request = post(BookRestController.BASE_ROUTE).accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(cmd));
+
+        mockMvc.perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(header().string(HttpHeaders.LOCATION, "/api/books/1234"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.bookTitle").value(book.getBookTitle()))
+                .andDo(print());
+    }
 
 }
