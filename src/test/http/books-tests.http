@@ -1,3 +1,7 @@
+###unknown title
+GET http://localhost:8080/api/books/XXX
+Accept: application/json
+
 ###get book by title
 GET http://localhost:8080/api/books/The%20Hobbit
 Accept: application/json

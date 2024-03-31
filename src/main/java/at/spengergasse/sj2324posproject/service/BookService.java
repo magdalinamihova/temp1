@@ -4,6 +4,7 @@ import at.spengergasse.sj2324posproject.domain.entities.Book;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.foundation.LikeSupport;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
+import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,9 @@ public class BookService implements LikeSupport {
 
     public Optional<Book> findByBookTitle(String bookTitle) {
         return bookRepository.findByBookTitleIgnoreCase(bookTitle);
+    }
+    public Book getByBookTitle(String bookTitle) {
+        return bookRepository.findByBookTitleIgnoreCase(bookTitle)
+                .orElseThrow(() -> BookNotFoundException.forBookTitle(bookTitle));
     }
 }

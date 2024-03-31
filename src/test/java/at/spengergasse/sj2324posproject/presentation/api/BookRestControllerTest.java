@@ -3,6 +3,7 @@ package at.spengergasse.sj2324posproject.presentation.api;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.service.BookService;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
+import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,12 +90,11 @@ class BookRestControllerTest {
     }
     @Test
     void ensureGetBookByTitleRespondsWithStatusOkWhenDataIsAvailable() throws Exception {
-        when(bookService.findByBookTitle(any())).thenReturn(Optional.of(book(user())));
-
-
         String title = "Little Women";
-        var request = get(BookRestController.GET_BOOK_ROUTE,title)
+        var request = get(BookRestController.GET_BOOK_ROUTE.replace("{bookTitle}", title))
                 .accept(MediaType.APPLICATION_JSON);
+
+        when(bookService.getByBookTitle(title)).thenReturn(book(user()));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
@@ -109,11 +109,13 @@ class BookRestControllerTest {
         var request = get(BookRestController.GET_BOOK_ROUTE.replace("{bookTitle}", title))
                 .accept(MediaType.APPLICATION_JSON);
 
-        when(bookService.findByBookTitle(title)).thenReturn(Optional.empty());
+        when(bookService.getByBookTitle(title)).thenThrow(BookNotFoundException.forBookTitle(title));
 
         mockMvc.perform(request)
                 .andExpect(status().isNotFound())
                 .andDo(print());
     }
+
+
 
 }

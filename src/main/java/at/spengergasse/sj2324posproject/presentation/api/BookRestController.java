@@ -1,13 +1,14 @@
 package at.spengergasse.sj2324posproject.presentation.api;
 
-import at.spengergasse.sj2324posproject.domain.entities.Book;
-
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.presentation.api.dtos.BookDto;
 import at.spengergasse.sj2324posproject.service.BookService;
+import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,8 +51,6 @@ public class BookRestController {
     @GetMapping(PATH_GET_BOOK)
     public HttpEntity<BookDto> getBookByTitle(@PathVariable String bookTitle) {
         log.debug("Fetching book with title: {}", bookTitle);
-        Optional<BookDto> book = service.findByBookTitle(bookTitle).map(BookDto::new);
-        return book.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(new BookDto(service.getByBookTitle(bookTitle)));
     }
 }
