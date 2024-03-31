@@ -25,18 +25,19 @@ class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
 
+    private Book savedBook;
 
     @BeforeEach
     void setup() {
         clear(bookRepository, userRepository);
         User savedUser = userRepository.save(user());
-        Book book = book(savedUser);
-        bookRepository.save(book);
+        savedBook = book(savedUser);
+        bookRepository.save(savedBook);
     }
 
     @Test
     void ensureSavingAndRereadingBookWorks() {
-        assertThat(bookRepository).isNotNull();
+        assertThat(bookRepository.findById(savedBook.getId())).isPresent();
     }
 
     @Test
@@ -64,3 +65,4 @@ class BookRepositoryTest {
         assertThat(result).allMatch(book -> book.getLanguage() == language);
     }
 }
+

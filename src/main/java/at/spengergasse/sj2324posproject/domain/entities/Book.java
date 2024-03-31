@@ -48,8 +48,9 @@ public class Book extends AbstractPersistable<Long> {
     private BookStatus bookStatus;
 
     //RELATIONSHIPS
-    @OneToMany(mappedBy = "reviewedBook")
-    private Set<Review> reviews;
+    //TODO: Is review set needed? We can get reviews with that specific book id
+//    @OneToMany(mappedBy = "reviewedBook")
+//    private Set<Review> reviews;
     @ManyToOne
     private User postedBy;
 
@@ -67,7 +68,7 @@ public class Book extends AbstractPersistable<Long> {
         this.bookCover = isNotNull(bookCover, "bookCover");
         this.hardCover = hardCover;
         this.dueDate = dueDate;
-        this.reviews = reviews;
+       // this.reviews = reviews;
         this.postedBy = postedBy;
         this.bookStatus = BookStatus.AVAILABLE;
     }

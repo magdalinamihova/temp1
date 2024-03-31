@@ -9,30 +9,51 @@ import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import at.spengergasse.sj2324posproject.persistence.UserRepository;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @DataJpaTest
 public class TestFixtures {
 
     public static Photo profilePic (){
-        return Photo.builder()
-                .name("profilpic")
-                .description("description")
-                .width(640)
-                .height(480)
-                .filetype("png")
-                .build();
-    }
 
-    public static Photo bookCover (){
-        return Photo.builder()
-                .name("little women cover")
-                .description("description")
+        Photo photo = Photo.builder()
+                .name("littlewomencover.jpg")
+                .description("Description")
                 .width(800)
                 .height(600)
-                .filetype("png")
+                .filetype("jpg")
                 .build();
+        try {
+            Path path = Paths.get("src/main/resources/images/littlewomencover.jpg");
+            byte[] photoBytes = Files.readAllBytes(path);
+            photo.uploadPhoto(photoBytes);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read image file: " + e.getMessage(), e);
+        }
+        return photo;
     }
 
+    public static Photo bookCover() {
+        Photo photo = Photo.builder()
+                .name("littlewomencover.jpg")
+                .description("Description")
+                .width(800)
+                .height(600)
+                .filetype("jpg")
+                .build();
+        try {
+            Path path = Paths.get("src/main/resources/images/littlewomencover.jpg");
+            byte[] photoBytes = Files.readAllBytes(path);
+            photo.uploadPhoto(photoBytes);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read image file: " + e.getMessage(), e);
+        }
+
+        return photo;
+    }
     public static User user (){
         return User.builder()
                 .username("josie")
