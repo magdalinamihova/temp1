@@ -31,16 +31,13 @@ public class UserServiceTest {
 
     @Test
     void ensureFetchUsersWithNoProvidedUsernameCallsFindAll() {
-        // given
         var username = Optional.<String>empty();
         var user = user();
         var user1 = user1();
         when(userRepository.findAll()).thenReturn(List.of(user, user1));
 
-        // when
         var result = userService.fetchUsers(username);
 
-        // then
         assertThat(result).containsExactlyInAnyOrder(user, user1);
         verify(userRepository /*, times(1)*/).findAll();
         verifyNoMoreInteractions(userRepository);
@@ -48,15 +45,12 @@ public class UserServiceTest {
 
     @Test
     void ensureFetchUsersWithProvidedUsernameCallsFindAll() {
-        // given
         var username = "josie";
         var user = user();
         when(userRepository.findAllByUsername(username)).thenReturn(List.of(user));
 
-        // when
         var result = userService.fetchUsers(Optional.of(username));
 
-        // then
         assertThat(result).containsExactlyInAnyOrder(user);
         verify(userRepository /*, times(1)*/).findAllByUsername(any());
         verifyNoMoreInteractions(userRepository);

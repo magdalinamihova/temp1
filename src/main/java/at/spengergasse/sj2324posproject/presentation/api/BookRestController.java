@@ -1,6 +1,7 @@
 package at.spengergasse.sj2324posproject.presentation.api;
 
 import at.spengergasse.sj2324posproject.domain.entities.Book;
+import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.presentation.api.dtos.BookDto;
 import at.spengergasse.sj2324posproject.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -13,21 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/books")
 public class BookRestController {
-
     private final BookService service;
 
     @GetMapping
-    public HttpEntity<List<BookDto>> getBooks(@RequestParam Optional<String> name) {
-        List<BookDto> returnValue = service.fetchBooks(name)
+    public HttpEntity<List<BookDto>> getBooks(
+            @RequestParam Optional<String> bookTitle,
+            @RequestParam Optional<String> language
+    ) {
+        List<BookDto> returnValue = service.fetchBooks(
+                        bookTitle,
+                        language.map(Language::valueOf)
+                )
                 .stream()
                 .map(BookDto::new)
-                .collect(Collectors.toList());
+                .toList();
 
         return (returnValue.isEmpty())
                 ? ResponseEntity.notFound().build()

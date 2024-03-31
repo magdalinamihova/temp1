@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.springframework.context.annotation.Import;
+import at.spengergasse.sj2324posproject.domain.enums.Language;
 
-import static at.spengergasse.sj2324posproject.domain.TestFixtures.book;
-import static at.spengergasse.sj2324posproject.domain.TestFixtures.user;
+import java.util.List;
+import java.util.Optional;
+
+import static at.spengergasse.sj2324posproject.domain.TestFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -25,6 +28,7 @@ class BookRepositoryTest {
 
     @BeforeEach
     void setup() {
+        clear(bookRepository, userRepository);
         User savedUser = userRepository.save(user());
         Book book = book(savedUser);
         bookRepository.save(book);
@@ -37,7 +41,26 @@ class BookRepositoryTest {
 
     @Test
     void ensureFindByBookTitleWorks(){
-        assertThat(bookRepository.findByBookTitle("Little Women")).isPresent();
+        //TODO: find out why the repo has some other titles than Little Women if the clear method doesnt exist
+        List<Book> books = bookRepository.findAll();
+        for (Book book : books) {
+            System.out.println("Book Title: " + book.getBookTitle());
+        }
+
+        Optional<Book> bookOptional = bookRepository.findByBookTitle("Little Women");
+        assertThat(bookOptional).isPresent();
+        assertThat(bookOptional.get().getBookTitle()).isEqualTo("Little Women");
     }
 
+    @Test
+    void ensureFindAllByLanguageWorks() {
+        List<Book> books = bookRepository.findAll();
+        for (Book book : books) {
+            System.out.println("Book language: " + book.getLanguage());
+        }
+        Language language = Language.ENGLISH;
+        List<Book> result = bookRepository.findAllByLanguage(language);
+        assertThat(result).isNotEmpty();
+        assertThat(result).allMatch(book -> book.getLanguage() == language);
+    }
 }
