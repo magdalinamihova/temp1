@@ -20,9 +20,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserService {
 
-    // private static final Logger logger = LoggerFactory.getLogger(UserService.class); // don't do that anymore
-    // private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private final UserRepository repository;
 
     public List<User> fetchUsers(Optional<String> username) {

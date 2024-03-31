@@ -22,22 +22,36 @@ class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
 
+    private Book savedBook;
 
     @BeforeEach
     void setup() {
         User savedUser = userRepository.save(user());
-        Book book = book(savedUser);
-        bookRepository.save(book);
+        savedBook = book(savedUser);
+        bookRepository.save(savedBook);
     }
 
     @Test
     void ensureSavingAndRereadingBookWorks() {
-        assertThat(bookRepository).isNotNull();
+        assertThat(bookRepository.findById(savedBook.getId())).isPresent();
     }
 
     @Test
-    void ensureFindByBookTitleWorks(){
+    void ensureFindByBookTitleWorks() {
         assertThat(bookRepository.findByBookTitle("Little Women")).isPresent();
     }
 
+    @Test
+    void ensureBookCoverUploadWorks() {
+        Book fetchedBook = bookRepository.findById(savedBook.getId()).orElse(null);
+
+        assertThat(fetchedBook).isNotNull();
+        assertThat(fetchedBook.getBookCover()).isNotNull();
+
+        assertThat(fetchedBook.getBookCover().getName()).isEqualTo("littlewomencover.jpg");
+        assertThat(fetchedBook.getBookCover().getDescription()).isEqualTo("Description");
+        assertThat(fetchedBook.getBookCover().getWidth()).isEqualTo(800);
+        assertThat(fetchedBook.getBookCover().getHeight()).isEqualTo(600);
+        assertThat(fetchedBook.getBookCover().getFiletype()).isEqualTo("jpg");
+    }
 }
