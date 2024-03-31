@@ -1,3 +1,7 @@
+###get book by title
+GET http://localhost:8080/api/books/Little%20Women
+Accept: application/json
+
 ###by language
 GET http://localhost:8080/api/books?language=GERMAN
 Accept: application/json
@@ -9,4 +13,6 @@ Accept: application/json
 ###all books
 GET http://localhost:8080/api/books
 Accept: application/json
+
+
 
