@@ -6,6 +6,8 @@ import at.spengergasse.sj2324posproject.domain.enums.*;
 import at.spengergasse.sj2324posproject.domain.records.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
+import at.spengergasse.sj2324posproject.persistence.BookRepository;
+import at.spengergasse.sj2324posproject.persistence.UserRepository;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -134,5 +136,9 @@ public class TestFixtures {
                 .build();
     }
 
+    public static void clear(BookRepository bookRepository, UserRepository userRepository) {
+        bookRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
 }
