@@ -1,5 +1,5 @@
 ###by language
-GET http://localhost:8080/api/books?language=ENGLISH
+GET http://localhost:8080/api/books?language=GERMAN
 Accept: application/json
 
 ###book title little women

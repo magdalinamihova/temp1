@@ -48,9 +48,9 @@ public class Book extends AbstractPersistable<Long> {
     private BookStatus bookStatus;
 
     //RELATIONSHIPS
-    //TODO: Is review set needed? We can get reviews with that specific book id
-//    @OneToMany(mappedBy = "reviewedBook")
-//    private Set<Review> reviews;
+    // TODO: Is review set needed? We can get reviews with that specific book id
+    // @OneToMany(mappedBy = "reviewedBook")
+    // private Set<Review> reviews;
     @ManyToOne
     private User postedBy;
 
