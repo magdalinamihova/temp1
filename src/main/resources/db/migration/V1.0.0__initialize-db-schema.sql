@@ -14,6 +14,7 @@ create sequence reviews_seq start with 1 increment by 50;
 create sequence users_seq start with 1 increment by 50;
 
 create table books (
+                       book_key VARCHAR(40) UNIQUE NOT NULL,
                        hard_cover boolean,
                        height integer not null,
                        width integer not null,

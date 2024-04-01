@@ -99,7 +99,7 @@ public class TestFixtures {
                 .build();
     }
 
-    public static Book book (User postedBy){
+    public static Book book1(User postedBy){
         return Book.builder()
                 .bookTitle("Little Women")
                 .author("Louisa May Alcott")
@@ -109,6 +109,21 @@ public class TestFixtures {
                 .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
+                .key("111-key")
+                .build();
+    }
+
+    public static Book book2(User postedBy){
+        return Book.builder()
+                .bookTitle("Little Women")
+                .author("Louisa May Alcott")
+                .bookDescription("Description")
+                .genre("Period piece")
+                .language(Language.GERMAN)
+                .bookCover(bookCover())
+                .hardCover(true)
+                .postedBy(postedBy)
+                .key("222-key")
                 .build();
     }
 

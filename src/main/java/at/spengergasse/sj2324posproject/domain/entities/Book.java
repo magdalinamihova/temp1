@@ -4,6 +4,7 @@ import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -54,11 +55,14 @@ public class Book extends AbstractPersistable<Long> {
     @ManyToOne @NotNull
     private User postedBy;
 
+    @Column(name = "book_key", length = 40, nullable = false, unique = true)
+    private @NotBlank String key;
+
     @Builder
     public Book(
             String bookTitle, String author, String bookDescription,
             Language language, String genre, Photo bookCover, boolean hardCover,
-            Date dueDate, Set<Review> reviews, User postedBy
+            Date dueDate, Set<Review> reviews, User postedBy, String key
     ) {
         this.bookTitle = isNotNull(bookTitle, "bookTitle");
         this.author = isNotNull(author, "author");
@@ -71,6 +75,7 @@ public class Book extends AbstractPersistable<Long> {
        // this.reviews = reviews;
         this.postedBy = postedBy;
         this.bookStatus = BookStatus.AVAILABLE;
+        this.key = isNotNull(key, "book_key");
     }
 
     @PrePersist

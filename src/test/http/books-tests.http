@@ -48,7 +48,8 @@ Content-Type: application/json
         "reviews": null,
         "memberships": null,
         "new": true
-    }
+    },
+    "key": "mmm-key"
 }
 
 ###unknown title

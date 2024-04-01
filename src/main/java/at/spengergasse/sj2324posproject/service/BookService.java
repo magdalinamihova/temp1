@@ -7,14 +7,18 @@ import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.foundation.LikeSupport;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import at.spengergasse.sj2324posproject.persistence.exception.BookAlreadyExistsException;
+import at.spengergasse.sj2324posproject.service.connectors.HttpBinConnector;
 import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClient;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -24,6 +28,7 @@ import java.util.Optional;
 public class BookService implements LikeSupport {
 
     private final BookRepository bookRepository;
+    private final HttpBinConnector httpBin;
 
     public List<Book> fetchBooks(Optional<String> bookTitle, Optional<Language> language) {
         if (bookTitle.isPresent()) {
@@ -67,6 +72,7 @@ public class BookService implements LikeSupport {
                 .hardCover(hardCover)
                 .dueDate(dueDate)
                 .postedBy(postedBy)
+                .key(httpBin.retrieveKey())
                 .build();
         bookRepository.save(book);
         log.info("Posted book {}", bookTitle);

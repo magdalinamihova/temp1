@@ -49,7 +49,7 @@ class BookRestControllerTest {
     @Test
     void ensureGetBooksRespondsWithStatusOkWhenDataIsAvailable() throws Exception{
         var request = get(BookRestController.BASE_ROUTE).accept(MediaType.APPLICATION_JSON);
-        when(bookService.fetchBooks(Optional.empty(), Optional.empty())).thenReturn(List.of(book(user())));
+        when(bookService.fetchBooks(Optional.empty(), Optional.empty())).thenReturn(List.of(book1(user())));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
@@ -103,7 +103,7 @@ class BookRestControllerTest {
         var request = get(BookRestController.GET_BOOK_ROUTE.replace("{bookTitle}", title))
                 .accept(MediaType.APPLICATION_JSON);
 
-        when(bookService.getByBookTitle(title)).thenReturn(book(user()));
+        when(bookService.getByBookTitle(title)).thenReturn(book1(user()));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
@@ -130,7 +130,7 @@ class BookRestControllerTest {
     void ensureCreateBookReturnsCreatedWithLocationForValidData() throws Exception {
         // given
         Long bookId = 1234L;
-        Book book = spy(TestFixtures.book(user()));
+        Book book = spy(TestFixtures.book1(user()));
         when(bookService.addBook(any(), any(), any(), any(), any(), any(), anyBoolean(), any(), any())).thenReturn(book);
         when(book.getId()).thenReturn(bookId);
 

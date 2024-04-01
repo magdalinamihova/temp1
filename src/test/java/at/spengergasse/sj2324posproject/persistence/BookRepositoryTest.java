@@ -31,7 +31,7 @@ class BookRepositoryTest {
     void setup() {
         clear(bookRepository, userRepository);
         User savedUser = userRepository.save(user());
-        savedBook = book(savedUser);
+        savedBook = book1(savedUser);
         bookRepository.save(savedBook);
     }
 
@@ -75,7 +75,7 @@ class BookRepositoryTest {
     @Test
     void ensureFindByBookTitleAndPostedByWorks() {
         User user = userRepository.save(user());
-        Book book = book(user);
+        Book book = book2(user);
         bookRepository.save(book);
 
         Optional<Book> optionalBook = bookRepository.findByBookTitleAndPostedBy(book.getBookTitle(), user);
