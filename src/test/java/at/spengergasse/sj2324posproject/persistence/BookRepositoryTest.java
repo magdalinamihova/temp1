@@ -50,11 +50,10 @@ class BookRepositoryTest {
     @Test
     void ensureFindByBookTitleWorks(){
         //TODO: find out why the repo has some titles other than Little Women if the clear method doesnt exist
-        List<Book> books = bookRepository.findAll();
-        for (Book book : books) {
-            System.out.println("Book Title: " + book.getBookTitle());
-        }
-
+//        List<Book> books = bookRepository.findAll();
+//        for (Book book : books) {
+//            System.out.println("Book Title: " + book.getBookTitle());
+//        }
         Optional<Book> bookOptional = bookRepository.findByBookTitleIgnoreCase("Little Women");
         assertThat(bookOptional).isPresent();
         assertThat(bookOptional.get().getBookTitle()).isEqualTo("Little Women");
@@ -81,6 +80,12 @@ class BookRepositoryTest {
         Optional<Book> optionalBook = bookRepository.findByBookTitleAndPostedBy(book.getBookTitle(), user);
         assertThat(optionalBook).isPresent();
         assertThat(optionalBook.get()).isEqualTo(book);
+    }
+    @Test
+    void ensureFindingByAuthorNamepartReturnsAResult(){
+        var found = bookRepository.findByAuthorNamePart("L");
+        System.out.println(found);
+        assertThat(found).isNotNull().isNotEmpty();
     }
 
 }
