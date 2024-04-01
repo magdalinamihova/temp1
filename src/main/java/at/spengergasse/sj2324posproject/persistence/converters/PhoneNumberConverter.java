@@ -3,7 +3,6 @@ package at.spengergasse.sj2324posproject.persistence.converters;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-
 import java.util.Optional;
 
 @Converter(autoApply = true)
@@ -11,7 +10,7 @@ public class PhoneNumberConverter implements AttributeConverter<PhoneNumber, Str
 
     @Override
     public String convertToDatabaseColumn(PhoneNumber phoneNumber) {
-        return Optional.ofNullable(phoneNumber).map(PhoneNumber::value).orElse(null);
+        return Optional.ofNullable(phoneNumber).map(PhoneNumber::getValue).orElse(null);
     }
 
     @Override

@@ -8,9 +8,10 @@ import java.util.Optional;
 
 @Converter(autoApply = true)
 public class EmailConverter implements AttributeConverter<Email, String> {
+
     @Override
     public String convertToDatabaseColumn(Email email) {
-        return Optional.ofNullable(email).map(Email::value).orElse(null);
+        return Optional.ofNullable(email).map(Email::getValue).orElse(null);
     }
 
     @Override

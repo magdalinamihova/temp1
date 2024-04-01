@@ -32,7 +32,6 @@ public class PhoneNumberConverterTest {
         assertThrows(IllegalArgumentException.class, () -> converter.convertToEntityAttribute(invalidDbValue));
     }
 
-
     @Test
     void ensureConvertToEntityAttributeInvalidFormat() {
         assertThrows(IllegalArgumentException.class, () -> converter.convertToEntityAttribute("+4312abc3456789"));

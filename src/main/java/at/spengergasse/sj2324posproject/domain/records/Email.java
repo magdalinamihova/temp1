@@ -1,23 +1,51 @@
 package at.spengergasse.sj2324posproject.domain.records;
 
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.Objects;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.function.Predicate;
 
-public record Email(@NotEmpty @NotBlank String value)  {
-    public static final int length = 64;
+@Embeddable
+public class Email {
 
-    public static final Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    public static final Predicate<String> isValidEmail = pattern.asMatchPredicate();
+    private static final int length = 64;
+    private static final Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private static final Predicate<String> isValidEmail = pattern.asMatchPredicate();
 
-    public Email {
-        Objects.requireNonNull(value);
-        if (!isValidEmail.test(value)) throw new IllegalArgumentException("Invalid email:" + value);
+    private String value;
+
+    public Email() {
+        // Default constructor required by Hibernate
     }
 
-    public static Email of(String value) {return new Email(value);}
+    public Email(@NotEmpty @NotBlank String value) {
+        Objects.requireNonNull(value);
+        if (!isValidEmail.test(value)) {
+            throw new IllegalArgumentException("Invalid email:" + value);
+        }
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public static Email of(String value) {
+        return new Email(value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Email email = (Email) o;
+        return Objects.equals(value, email.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
 }
