@@ -14,5 +14,6 @@ class HttpBinConnectorTest {
     @Test
     void ensureRetrievalOfKeyReturnsAnything() {
         assertThat(httpBin.retrieveKey()).isNotNull();
+        System.out.println(httpBin.retrieveKey());
     }
 }
