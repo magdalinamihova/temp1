@@ -1,6 +1,7 @@
 package at.spengergasse.sj2324posproject.presentation.www;
 
 import at.spengergasse.sj2324posproject.domain.entities.Book;
+import at.spengergasse.sj2324posproject.persistence.UserRepository;
 import at.spengergasse.sj2324posproject.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 @WebMvcTest(BookController.class)
 class BookControllerTest {
     private @Autowired MockMvc mockMvc;
-   // private @Autowired ObjectMapper objectMapper;
     private @MockBean BookService bookService;
+    private @MockBean UserRepository userRepository;
 
     @Test
-    void  ensureGetBooksWithMoreThanOneResultShowsListView() throws Exception{
+    void ensureGetBooksWithMoreThanOneResultShowsListView() throws Exception {
         Book book1 = book1(user());
         Book book2 = book2(user());
         List<Book> books = List.of(book1, book2);
@@ -30,19 +30,20 @@ class BookControllerTest {
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("books",books))
+                .andExpect(model().attribute("books", books))
                 .andExpect(view().name("books/list"))
                 .andDo(print());
     }
+
     @Test
-    void  ensureGetBooksWithOnlyOneResultShowsDetailView() throws Exception{
+    void ensureGetBooksWithOnlyOneResultShowsDetailView() throws Exception {
         Book book1 = book1(user());
         List<Book> books = List.of(book1);
         when(bookService.getBooks()).thenReturn(books);
 
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("book",book1))
+                .andExpect(model().attribute("book", book1))
                 .andExpect(view().name("books/detail"))
                 .andDo(print());
     }

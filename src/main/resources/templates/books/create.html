@@ -11,15 +11,15 @@
     <form method="post" th:object="${form}">
         <div class="mb-3">
             <label for="bookTitle" class="form-label" th:text="#{books.label.bookTitle}">Book Title</label>
-            <input type="email" class="form-control" id="bookTitle" th:field="*{bookTitle}">
-         </div>
+            <input type="text" class="form-control" id="bookTitle" th:field="*{bookTitle}">
+        </div>
         <div class="mb-3">
             <label for="author" class="form-label" th:text="#{books.label.author}">Author</label>
-            <input type="email" class="form-control" id="author" th:field="*{author}">
+            <input type="text" class="form-control" id="author" th:field="*{author}">
         </div>
         <div class="mb-3">
             <label for="bookDescription" class="form-label" th:text="#{books.label.bookDescription}">Description</label>
-            <input type="email" class="form-control" id="bookDescription" th:field="*{bookDescription}">
+            <input type="text" class="form-control" id="bookDescription" th:field="*{bookDescription}">
         </div>
         <div class="mb-3">
             <label for="language" class="form-label" th:text="#{books.label.language}">Language</label>
@@ -31,15 +31,21 @@
 
         <div class="mb-3">
             <label for="genre" class="form-label" th:text="#{books.label.genre}">Genre</label>
-            <input type="email" class="form-control" id="genre" th:field="*{genre}">
+            <input type="text" class="form-control" id="genre" th:field="*{genre}">
         </div>
         <div class="mb-3">
             <label for="postedById" class="form-label" th:text="#{books.label.postedById}">Posted By</label>
-            <input type="email" class="form-control" id="postedById" th:value="${form.postedById}">
+            <input type="number" class="form-control" id="postedById" th:field="*{postedById}">
+        </div>
+        <div class="mb-3">
+            <label for="hardCover" class="form-label" th:text="#{books.label.hardCover}">Hard Cover</label>
+            <select class="form-select" id="hardCover" th:field="*{hardCover}">
+                <option value="true">Hard</option>
+                <option value="false">Soft</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary" th:text="#{button.submit}">Submit</button>
         <a href="#" class="btn btn-danger" th:href="@{/books}" th:text="#{button.cancel}">Cancel</a>
-<!--        QUESTION: why does tge cancel button look funky: ??button.cancel_en_US-->
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

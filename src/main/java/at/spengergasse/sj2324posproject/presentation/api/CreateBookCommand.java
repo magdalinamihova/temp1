@@ -23,4 +23,5 @@ public record CreateBookCommand (
     boolean hardCover,
     @Nullable Date dueDate,
     @NotNull Long postedById) {
+
 }
