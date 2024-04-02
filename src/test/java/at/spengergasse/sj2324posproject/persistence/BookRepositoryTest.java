@@ -49,7 +49,7 @@ class BookRepositoryTest {
 
     @Test
     void ensureFindByBookTitleWorks(){
-        //TODO: find out why the repo has some titles other than Little Women if the clear method doesnt exist
+        //QUESTION: why does the repo have some titles other than Little Women if the clear method doesn't exist
 //        List<Book> books = bookRepository.findAll();
 //        for (Book book : books) {
 //            System.out.println("Book Title: " + book.getBookTitle());
@@ -82,11 +82,9 @@ class BookRepositoryTest {
         assertThat(optionalBook.get()).isEqualTo(book);
     }
     @Test
-    void ensureFindingByAuthorNamepartReturnsAResult(){
+    void ensureFindingByAuthorNamePartReturnsAResult(){
         var found = bookRepository.findByAuthorNamePart("L");
-        System.out.println(found);
         assertThat(found).isNotNull().isNotEmpty();
     }
 
 }
-
