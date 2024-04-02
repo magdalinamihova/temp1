@@ -16,19 +16,19 @@
             <th scope="col" th:text="#{books.label.author}">Author</th>
             <th scope="col" th:text="#{books.label.language}">Language</th>
             <th scope="col" th:text="#{books.label.genre}">Genre</th>
-            <th scope="col"><a href="#" class="btn btn-tiny btn-primary" th:href="@{/book/create}" th:text="#{button.create}">Create</a></th>
+            <th scope="col"><a href="#" class="btn btn-tiny btn-primary" th:href="@{/books/create}" th:text="#{button.create}">Create</a></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="book, bookStatus : ${books}" th:object="${book}">
-            <th scope="row"><a href="#" th:href="@{/book/show/{id}(id=*{key})}" th:text="*{key}">key</a></th>
+            <th scope="row"><a href="#" th:href="@{/templates/books/show/{id}(id=*{key})}" th:text="*{key}">key</a></th>
             <td th:text="*{bookTitle}">Little Women</td>
             <td th:text="*{author}">Louisa May Alcott</td>
             <td th:text="*{language}">English</td>
             <td th:text="*{genre}">Classic</td>
             <td>
-                <a href="#" class="btn btn-tiny btn-primary" th:href="@{/book/edit/{id}(id=*{key})}" th:text="#{button.edit}">Edit</a>
-                <a href="#" class="btn btn-tiny btn-danger" th:href="@{/book/delete/{id}(id=*{key})}" th:text="#{button.delete}">Delete</a>
+                <a href="#" class="btn btn-tiny btn-primary" th:href="@{/templates/books/edit/{id}(id=*{key})}" th:text="#{button.edit}">Edit</a>
+                <a href="#" class="btn btn-tiny btn-danger" th:href="@{/templates/books/delete/{id}(id=*{key})}" th:text="#{button.delete}">Delete</a>
             </td>
         </tr>
         </tbody>

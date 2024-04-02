@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -26,21 +27,21 @@ public class BookController {
         List<Book> books = bookService.getBooks();
         if(books.size()==1){
             model.addAttribute("book",books.getFirst());
-            return "book/detail";
+            return "books/detail";
         }
         else{
             model.addAttribute("books",books);
-            return "book/list";
+            return "books/list";
         }
     }
     @GetMapping("/create")
-    private String showCreateBook(Model model, @Valid CreateBookForm form, BindingResult bindingResult){
+    private String showCreateBook(Model model, @Valid @ModelAttribute CreateBookForm form, BindingResult bindingResult){
         model.addAttribute("form", new CreateBookForm());
-        return  "book/create";
+        return  "books/create";
     }
 //    @GetMapping("/create")
 //    private String handleCreateBookFormSubmission(Model model, @Valid CreateBookForm form, BindingResult bindingResult){
 //        model.addAttribute("form", new CreateBookForm());
-//       return  "book/create";
+//       return  "redirect:books";
 //    }
 }

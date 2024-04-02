@@ -31,7 +31,7 @@ class BookControllerTest {
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("books",books))
-                .andExpect(view().name("book/list"))
+                .andExpect(view().name("books/list"))
                 .andDo(print());
     }
     @Test
@@ -43,7 +43,7 @@ class BookControllerTest {
         mockMvc.perform(get("/books"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("book",book1))
-                .andExpect(view().name("book/detail"))
+                .andExpect(view().name("books/detail"))
                 .andDo(print());
     }
 }
