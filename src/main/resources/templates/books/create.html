@@ -23,15 +23,19 @@
         </div>
         <div class="mb-3">
             <label for="language" class="form-label" th:text="#{books.label.language}">Language</label>
-            <input type="email" class="form-control" id="language" th:field="*{language}">
+            <select class="form-select" id="language" th:field="*{language}">
+                <option th:each="lang : ${T(at.spengergasse.sj2324posproject.domain.enums.Language).values()}"
+                        th:value="${lang}" th:text="${lang}"></option>
+            </select>
         </div>
+
         <div class="mb-3">
             <label for="genre" class="form-label" th:text="#{books.label.genre}">Genre</label>
             <input type="email" class="form-control" id="genre" th:field="*{genre}">
         </div>
         <div class="mb-3">
-            <label for="postedBy" class="form-label" th:text="#{books.label.postedBy}">Posted By</label>
-            <input type="email" class="form-control" id="postedBy" th:field="*{postedBy}">
+            <label for="postedById" class="form-label" th:text="#{books.label.postedById}">Posted By</label>
+            <input type="email" class="form-control" id="postedById" th:value="${form.postedById}">
         </div>
         <button type="submit" class="btn btn-primary" th:text="#{button.submit}">Submit</button>
         <a href="#" class="btn btn-danger" th:href="@{/books}" th:text="#{button.cancel}">Cancel</a>

@@ -24,5 +24,5 @@ public final class CreateBookForm {
     private Photo bookCover;
     private boolean hardCover;
     private @Nullable Date dueDate;
-    private @NotNull User postedBy;
+    private @NotNull Long postedById;
 }
