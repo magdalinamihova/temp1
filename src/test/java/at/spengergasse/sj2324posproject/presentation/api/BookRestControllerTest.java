@@ -2,7 +2,9 @@ package at.spengergasse.sj2324posproject.presentation.api;
 
 import at.spengergasse.sj2324posproject.domain.TestFixtures;
 import at.spengergasse.sj2324posproject.domain.entities.Book;
+import at.spengergasse.sj2324posproject.domain.entities.User;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
+import at.spengergasse.sj2324posproject.persistence.UserRepository;
 import at.spengergasse.sj2324posproject.service.BookService;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import at.spengergasse.sj2324posproject.service.exceptions.BookNotFoundException;
@@ -39,11 +41,13 @@ class BookRestControllerTest {
     private @Autowired ObjectMapper mapper;
     private @MockBean BookService bookService;
     private @MockBean BookRepository bookRepository;
+    private @MockBean UserRepository userRepository;
 
     @BeforeEach
     void setup(){
         assumeThat(mockMvc).isNotNull();
         assumeThat(bookService).isNotNull();
+        assumeThat(userRepository).isNotNull();
     }
 
     @Test
@@ -125,20 +129,23 @@ class BookRestControllerTest {
                 .andDo(print());
     }
 
-
     @Test
     void ensureCreateBookReturnsCreatedWithLocationForValidData() throws Exception {
-        // given
         Long bookId = 1234L;
         Book book = spy(TestFixtures.book1(user()));
+
+        User mockUser = mock(User.class);
+        Long userId = 1L; // Example user ID
+        when(mockUser.getId()).thenReturn(userId); // Mocking a valid user ID
+        when(userRepository.findById(any())).thenReturn(Optional.of(mockUser));
+
         when(bookService.addBook(any(), any(), any(), any(), any(), any(), anyBoolean(), any(), any())).thenReturn(book);
         when(book.getId()).thenReturn(bookId);
 
         CreateBookCommand cmd = new CreateBookCommand(book.getBookTitle(), book.getAuthor(), book.getBookDescription(),
                 book.getLanguage(), book.getGenre(), book.getBookCover(),
-                book.isHardCover(), book.getDueDate(), book.getPostedBy());
+                book.isHardCover(), book.getDueDate(), userId);
 
-        // expect
         var request = post(BookRestController.BASE_ROUTE).accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(cmd));
@@ -150,5 +157,6 @@ class BookRestControllerTest {
                 .andExpect(jsonPath("$.bookTitle").value(book.getBookTitle()))
                 .andDo(print());
     }
+
 
 }

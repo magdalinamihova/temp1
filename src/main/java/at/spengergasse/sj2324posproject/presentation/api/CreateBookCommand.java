@@ -22,5 +22,5 @@ public record CreateBookCommand (
     Photo bookCover,
     boolean hardCover,
     @Nullable Date dueDate,
-    @NotNull User postedBy ) {
+    @NotNull Long postedById) {
 }

@@ -72,6 +72,7 @@ public class BookService implements LikeSupport {
         return book;
     }
 
+
     @Transactional(readOnly = true)
     public List<Book> getBooks() {
         return bookRepository.findAll();

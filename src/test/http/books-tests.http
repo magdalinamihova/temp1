@@ -19,7 +19,7 @@ Accept: application/json
 GET http://localhost:8080/api/books
 Accept: application/json
 
-###Posting a new book (1984)
+###Posting a new book (1984) by user 1
 POST http://localhost:8080/api/books
 Content-Type: application/json
 
@@ -30,38 +30,7 @@ Content-Type: application/json
   "language": "ENGLISH",
   "genre": "Dystopian",
   "hardCover": true,
-  "postedBy": {
-    "id": 1,
-    "username": "natalie_scattorccio",
-    "firstName": "Natalie",
-    "lastName": "Scattorccio",
-    "password": "nat12345",
-    "email": {
-      "value": "natalie@example.com"
-    },
-    "phoneNumber": {
-      "value": "+1234567890"
-    },
-    "address": {
-      "street": "10001 Main Street",
-      "city": "A",
-      "postalCode": "10001",
-      "country": "Canada"
-    },
-    "gender": "FEMALE",
-    "userRole": "ADMIN",
-    "profilePic": {
-      "name": "Nat",
-      "width": 175,
-      "height": 70,
-      "filetype": "image/jpg",
-      "filePath": "src\\main\\resources\\images\\littlewomencover.jpg"
-    },
-    "groupsOwned": null,
-    "reviews": null,
-    "memberships": null,
-    "new": true
-  },
+  "postedById": "1",
   "key": "mmm-key"
 }
 
