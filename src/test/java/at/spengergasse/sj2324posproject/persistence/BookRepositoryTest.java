@@ -87,4 +87,10 @@ class BookRepositoryTest {
         assertThat(found).isNotNull().isNotEmpty();
     }
 
+    @Test
+    void ensureFindingOverviewByAuthorNamePartReturnsAResult(){
+        var found = bookRepository.findOverviewByAuthorNamePart("L");
+        assertThat(found).isNotNull().isNotEmpty();
+    }
+
 }
