@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Log4j2
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class BookService implements LikeSupport {
 
     private final BookRepository bookRepository;
@@ -43,7 +43,7 @@ public class BookService implements LikeSupport {
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Book addBook(String bookTitle, String author, String bookDescription, Language language,
                         String genre, Photo bookCover, boolean hardCover, Date dueDate, User postedBy) {
         log.debug("Check if book {} has been posted", bookTitle);

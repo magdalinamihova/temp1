@@ -29,14 +29,6 @@ Content-Type: application/json
   "bookDescription": "A dystopian novel about the future.",
   "language": "ENGLISH",
   "genre": "Dystopian",
-  "bookCover": {
-    "name": "1984cover.jpg",
-    "description": "Book cover for 1984",
-    "width": 800,
-    "height": 600,
-    "filetype": "jpg",
-    "filePath": "src\\main\\resources\\images\\1984cover.jpg"
-  },
   "hardCover": true,
   "postedBy": {
     "id": 1,

@@ -19,7 +19,7 @@ public record CreateBookCommand (
     @NotNull @NotEmpty String bookDescription,
     Language language,
     @NotNull @NotEmpty String genre,
-    @NotNull Photo bookCover,
+    Photo bookCover,
     boolean hardCover,
     @Nullable Date dueDate,
     @NotNull User postedBy ) {

@@ -36,7 +36,7 @@ public class Book extends AbstractPersistable<Long> {
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String genre;
 
-    @Embedded @NotNull
+    @Embedded
     private Photo bookCover;
 
     @Column
@@ -69,7 +69,7 @@ public class Book extends AbstractPersistable<Long> {
         this.bookDescription = isNotNull(bookDescription, "bookDescription");
         this.language = language;
         this.genre = isNotNull(genre, "genre");
-        this.bookCover = isNotNull(bookCover, "bookCover");
+        this.bookCover = bookCover;
         this.hardCover = hardCover;
         this.dueDate = dueDate;
        // this.reviews = reviews;
