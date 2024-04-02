@@ -145,4 +145,28 @@ public class BookServiceTest {
         verify(bookRepository).findByBookTitleAndPostedBy(bookTitle, user);
         verifyNoMoreInteractions(bookRepository);
     }
+    @Test
+    void ensureGetBookCallsRepositoryFindById() {
+        Long bookId = 1L;
+        var book = book1(user());
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+
+        Optional<Book> result = bookService.getBook(bookId);
+
+        assertThat(result).isPresent().contains(book);
+        verify(bookRepository).findById(bookId);
+        verifyNoMoreInteractions(bookRepository);
+    }
+
+    @Test
+    void ensureGetBookReturnsEmptyOptionalWhenBookNotFound() {
+        Long bookId = 1L;
+        when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
+
+        Optional<Book> result = bookService.getBook(bookId);
+
+        assertThat(result).isEmpty();
+        verify(bookRepository).findById(bookId);
+        verifyNoMoreInteractions(bookRepository);
+    }
 }

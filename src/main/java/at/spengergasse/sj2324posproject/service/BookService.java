@@ -43,14 +43,7 @@ public class BookService implements LikeSupport {
         }
     }
 
-    public Optional<Book> findByBookTitle(String bookTitle) {
-        return bookRepository.findByBookTitleIgnoreCase(bookTitle);
-    }
-    public Book getByBookTitle(String bookTitle) {
-        return bookRepository.findByBookTitleIgnoreCase(bookTitle)
-                .orElseThrow(() -> BookNotFoundException.forBookTitle(bookTitle));
-    }
-    @Transactional
+    @Transactional(readOnly = true)
     public Book addBook(String bookTitle, String author, String bookDescription, Language language,
                         String genre, Photo bookCover, boolean hardCover, Date dueDate, User postedBy) {
         log.debug("Check if book {} has been posted", bookTitle);
@@ -78,4 +71,18 @@ public class BookService implements LikeSupport {
         log.info("Posted book {}", bookTitle);
         return book;
     }
+
+    @Transactional(readOnly = true)
+    public List<Book> getBooks() {
+        return bookRepository.findAll();
+    }
+    @Transactional(readOnly = true)
+    public Optional<Book> getBook(Long id) {return bookRepository.findById(id);}
+
+    @Transactional(readOnly = true)
+    public Book getByBookTitle(String bookTitle) {
+        return bookRepository.findByBookTitleIgnoreCase(bookTitle)
+                .orElseThrow(() -> BookNotFoundException.forBookTitle(bookTitle));
+    }
+
 }

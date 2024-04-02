@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.3</version>
+		<version>3.2.4</version>
 	</parent>
 
 	<groupId>at.spengergasse</groupId>
@@ -24,7 +24,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<scope>annotationProcessor</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

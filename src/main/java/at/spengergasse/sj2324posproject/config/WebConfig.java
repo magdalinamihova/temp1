@@ -8,8 +8,7 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class WebConfig {
-    //why doesn't it work with the application properties??
-    public static final String BASE_URL = "https://httpbin.org";
+     public static final String BASE_URL = "https://httpbin.org";
 
     @Bean
     public RestClient httpBin(RestClient.Builder builder) {
