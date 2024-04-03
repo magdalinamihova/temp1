@@ -31,7 +31,7 @@ class BookRepositoryTest {
     void setup() {
         clear(bookRepository, userRepository);
         User savedUser = userRepository.save(user());
-        savedBook = book(savedUser);
+        savedBook = book1(savedUser);
         bookRepository.save(savedBook);
     }
 
@@ -41,14 +41,20 @@ class BookRepositoryTest {
     }
 
     @Test
-    void ensureFindByBookTitleWorks(){
-        //TODO: find out why the repo has some other titles than Little Women if the clear method doesnt exist
-        List<Book> books = bookRepository.findAll();
-        for (Book book : books) {
-            System.out.println("Book Title: " + book.getBookTitle());
-        }
+    void ensureFindAllByBookTitleLikeIgnoreCaseWorks() {
+        List<Book> books = bookRepository.findAllByBookTitleLikeIgnoreCase("Little%");
+        assertThat(books).isNotEmpty();
+        assertThat(books).allMatch(book -> book.getBookTitle().toLowerCase().contains("little"));
+    }
 
-        Optional<Book> bookOptional = bookRepository.findByBookTitle("Little Women");
+    @Test
+    void ensureFindByBookTitleWorks(){
+        //QUESTION: why does the repo have some titles other than Little Women if the clear method doesn't exist
+//        List<Book> books = bookRepository.findAll();
+//        for (Book book : books) {
+//            System.out.println("Book Title: " + book.getBookTitle());
+//        }
+        Optional<Book> bookOptional = bookRepository.findByBookTitleIgnoreCase("Little Women");
         assertThat(bookOptional).isPresent();
         assertThat(bookOptional.get().getBookTitle()).isEqualTo("Little Women");
     }
@@ -64,5 +70,27 @@ class BookRepositoryTest {
         assertThat(result).isNotEmpty();
         assertThat(result).allMatch(book -> book.getLanguage() == language);
     }
-}
 
+    @Test
+    void ensureFindByBookTitleAndPostedByWorks() {
+        User user = userRepository.save(user());
+        Book book = book2(user);
+        bookRepository.save(book);
+
+        Optional<Book> optionalBook = bookRepository.findByBookTitleAndPostedBy(book.getBookTitle(), user);
+        assertThat(optionalBook).isPresent();
+        assertThat(optionalBook.get()).isEqualTo(book);
+    }
+    @Test
+    void ensureFindingByAuthorNamePartReturnsAResult(){
+        var found = bookRepository.findByAuthorNamePart("L");
+        assertThat(found).isNotNull().isNotEmpty();
+    }
+
+    @Test
+    void ensureFindingOverviewByAuthorNamePartReturnsAResult(){
+        var found = bookRepository.findOverviewByAuthorNamePart("L");
+        assertThat(found).isNotNull().isNotEmpty();
+    }
+
+}

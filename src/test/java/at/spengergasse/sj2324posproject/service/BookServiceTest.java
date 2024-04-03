@@ -3,6 +3,8 @@ package at.spengergasse.sj2324posproject.service;
 import at.spengergasse.sj2324posproject.domain.entities.Book;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
+import at.spengergasse.sj2324posproject.persistence.exception.BookAlreadyExistsException;
+import at.spengergasse.sj2324posproject.service.connectors.HttpBinConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +17,7 @@ import java.util.Optional;
 import static at.spengergasse.sj2324posproject.domain.TestFixtures.*;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assumptions.assumeThat;
 import static org.mockito.Mockito.*;
 
@@ -24,54 +27,57 @@ public class BookServiceTest {
     private BookService bookService;
 
     private @Mock BookRepository bookRepository;
+    private @Mock HttpBinConnector httpBinConnector;
 
     @BeforeEach
     void setup() {
         assumeThat(bookRepository).isNotNull();
-        bookService = new BookService(bookRepository);
+        assumeThat(httpBinConnector).isNotNull();
+        bookService = new BookService(bookRepository, httpBinConnector);
     }
 
     @Test
     void ensureFetchBooksWithNoProvidedParametersCallsFindAll() {
-        var book = book(user());
-        var book1 = book(user1());
-        when(bookRepository.findAll()).thenReturn(List.of(book, book1));
+        var book1 = book1(user());
+        var book2 = book2(user1());
+        when(bookRepository.findAll()).thenReturn(List.of(book1, book2));
 
         var result = bookService.fetchBooks(empty(), empty());
 
-        assertThat(result).containsExactlyInAnyOrder(book, book1);
+        assertThat(result).containsExactlyInAnyOrder(book1, book2);
         verify(bookRepository).findAll();
         verifyNoMoreInteractions(bookRepository);
     }
+
     @Test
     void ensureFetchBooksWithProvidedBookTitleCallsFindAllByBookTitle() {
         var bookTitle = "Little Women";
-        var book = book(user());
-        when(bookRepository.findAllByBookTitle(bookTitle)).thenReturn(List.of(book));
+        var book = book1(user());
+        when(bookRepository.findAllByBookTitleLikeIgnoreCase("Little%20Women")).thenReturn(List.of(book));
 
-        var result = bookService.fetchBooks(Optional.of(bookTitle), empty());
+        var result = bookService.fetchBooks(Optional.of("Little%20Women"), empty());
 
         assertThat(result).containsExactlyInAnyOrder(book);
-        verify(bookRepository).findAllByBookTitle(any());
+        verify(bookRepository).findAllByBookTitleLikeIgnoreCase("Little%20Women");
         verifyNoMoreInteractions(bookRepository);
     }
 
     @Test
     void ensureFetchBooksWithProvidedLanguageCallsFindAllByLanguage() {
         Language language = Language.ENGLISH;
-        var book = book(user());
+        var book = book1(user());
         when(bookRepository.findAllByLanguage(Language.valueOf(String.valueOf(language)))).thenReturn(List.of(book));
 
         var result = bookService.fetchBooks(empty(), Optional.of(language));
 
         assertThat(result).containsExactlyInAnyOrder(book);
-        verify(bookRepository).findAllByLanguage(any());
+        verify(bookRepository).findAllByLanguage(eq(Language.valueOf(String.valueOf(language))));
         verifyNoMoreInteractions(bookRepository);
     }
 
     @Test
     void ensureFetchBooksWithNoProvidedParametersDoesNotCallFindAllByBookTitleOrFindAllByLanguage() {
-        var book = book(user());
+        var book = book1(user());
         when(bookRepository.findAll()).thenReturn(List.of(book));
 
         var result = bookService.fetchBooks(empty(), empty());
@@ -81,4 +87,86 @@ public class BookServiceTest {
         verifyNoMoreInteractions(bookRepository);
     }
 
+    @Test
+    void ensureAddBookCallsRepositorySaveAndReturnsAddedBook() {
+        var bookTitle = "1984";
+        var author = "George Orwell";
+        var bookDescription = "A dystopian novel about the future.";
+        var language = Language.ENGLISH;
+        var genre = "Dystopian";
+        var bookCover = bookCover();
+        var hardCover = true;
+        var user = user();
+        var key = "xxx-key";
+
+        var book = Book.builder()
+                .bookTitle(bookTitle)
+                .author(author)
+                .bookDescription(bookDescription)
+                .language(language)
+                .genre(genre)
+                .bookCover(bookCover)
+                .hardCover(hardCover)
+                .dueDate(null)
+                .postedBy(user)
+                .key(key)
+                .build();
+
+        when(bookRepository.findByBookTitleAndPostedBy(bookTitle, user)).thenReturn(Optional.empty());
+        when(bookRepository.save(any(Book.class))).thenReturn(book);
+        when(httpBinConnector.retrieveKey()).thenReturn("xxx-key");
+
+        var result = bookService.addBook(bookTitle, author, bookDescription, language, genre, bookCover, hardCover, null, user);
+
+        assertThat(result).isEqualTo(book);
+        verify(bookRepository).findByBookTitleAndPostedBy(bookTitle, user);
+        verify(bookRepository).save(book);
+        verifyNoMoreInteractions(bookRepository);
+    }
+
+    @Test
+    void ensureAddBookThrowsExceptionWhenBookAlreadyExists() {
+        var bookTitle = "1984";
+        var author = "George Orwell";
+        var bookDescription = "A dystopian novel about the future.";
+        var language = Language.ENGLISH;
+        var genre = "Dystopian";
+        var bookCover = bookCover();
+        var hardCover = true;
+        var user = user();
+        var existingBook = book1(user);
+
+        when(bookRepository.findByBookTitleAndPostedBy(bookTitle, user)).thenReturn(Optional.of(existingBook));
+
+        assertThatThrownBy(() -> bookService.addBook(bookTitle, author, bookDescription, language, genre, bookCover, hardCover, null, user))
+                .isInstanceOf(BookAlreadyExistsException.class)
+                .hasMessage("Book with title '1984' already exists!");
+
+        verify(bookRepository).findByBookTitleAndPostedBy(bookTitle, user);
+        verifyNoMoreInteractions(bookRepository);
+    }
+    @Test
+    void ensureGetBookCallsRepositoryFindById() {
+        Long bookId = 1L;
+        var book = book1(user());
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
+
+        Optional<Book> result = bookService.getBook(bookId);
+
+        assertThat(result).isPresent().contains(book);
+        verify(bookRepository).findById(bookId);
+        verifyNoMoreInteractions(bookRepository);
+    }
+
+    @Test
+    void ensureGetBookReturnsEmptyOptionalWhenBookNotFound() {
+        Long bookId = 1L;
+        when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
+
+        Optional<Book> result = bookService.getBook(bookId);
+
+        assertThat(result).isEmpty();
+        verify(bookRepository).findById(bookId);
+        verifyNoMoreInteractions(bookRepository);
+    }
 }

@@ -4,6 +4,7 @@ import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.enums.BookStatus;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -35,7 +36,7 @@ public class Book extends AbstractPersistable<Long> {
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String genre;
 
-    @Embedded @NotNull
+    @Embedded
     private Photo bookCover;
 
     @Column
@@ -51,26 +52,30 @@ public class Book extends AbstractPersistable<Long> {
     // TODO: Is review set needed? We can get reviews with that specific book id
     // @OneToMany(mappedBy = "reviewedBook")
     // private Set<Review> reviews;
-    @ManyToOne
+    @ManyToOne @NotNull
     private User postedBy;
+
+    @Column(name = "book_key", length = 40, nullable = false, unique = true)
+    private @NotBlank String key;
 
     @Builder
     public Book(
             String bookTitle, String author, String bookDescription,
             Language language, String genre, Photo bookCover, boolean hardCover,
-            Date dueDate, Set<Review> reviews, User postedBy
+            Date dueDate, Set<Review> reviews, User postedBy, String key
     ) {
         this.bookTitle = isNotNull(bookTitle, "bookTitle");
         this.author = isNotNull(author, "author");
         this.bookDescription = isNotNull(bookDescription, "bookDescription");
         this.language = language;
         this.genre = isNotNull(genre, "genre");
-        this.bookCover = isNotNull(bookCover, "bookCover");
+        this.bookCover = bookCover;
         this.hardCover = hardCover;
         this.dueDate = dueDate;
        // this.reviews = reviews;
         this.postedBy = postedBy;
         this.bookStatus = BookStatus.AVAILABLE;
+        this.key = isNotNull(key, "book_key");
     }
 
     @PrePersist

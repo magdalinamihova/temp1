@@ -3,7 +3,7 @@ package at.spengergasse.sj2324posproject.domain;
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.*;
 import at.spengergasse.sj2324posproject.domain.enums.*;
-import at.spengergasse.sj2324posproject.domain.records.Address;
+import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
@@ -99,16 +99,31 @@ public class TestFixtures {
                 .build();
     }
 
-    public static Book book (User postedBy){
+    public static Book book1(User postedBy){
         return Book.builder()
                 .bookTitle("Little Women")
                 .author("Louisa May Alcott")
                 .bookDescription("Description")
                 .genre("Period piece")
                 .language(Language.ENGLISH)
+               // .bookCover(bookCover())
+                .hardCover(true)
+                .postedBy(postedBy)
+                .key("111-key")
+                .build();
+    }
+
+    public static Book book2(User postedBy){
+        return Book.builder()
+                .bookTitle("Little Women")
+                .author("Louisa May Alcott")
+                .bookDescription("Description")
+                .genre("Period piece")
+                .language(Language.GERMAN)
                 .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
+                .key("222-key")
                 .build();
     }
 

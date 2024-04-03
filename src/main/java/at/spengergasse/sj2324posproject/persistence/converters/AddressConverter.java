@@ -1,9 +1,8 @@
 package at.spengergasse.sj2324posproject.persistence.converters;
 
-import at.spengergasse.sj2324posproject.domain.records.Address;
+import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-
 import java.util.Objects;
 
 @Converter(autoApply = true)
@@ -17,10 +16,10 @@ public class AddressConverter implements AttributeConverter<Address, String> {
             return null;
         }
 
-        return address.street() + COMPONENT_SEPARATOR +
-                address.city() + COMPONENT_SEPARATOR +
-                address.postalCode() + COMPONENT_SEPARATOR +
-                address.country();
+        return address.getStreet() + COMPONENT_SEPARATOR +
+                address.getCity() + COMPONENT_SEPARATOR +
+                address.getPostalCode() + COMPONENT_SEPARATOR +
+                address.getCountry();
     }
 
     @Override

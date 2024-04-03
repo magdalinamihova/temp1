@@ -19,6 +19,7 @@ public class TestMain{
     PostgreSQLContainer<?> postgresContainer() {
         final int localPort = 25432;
         final int containerPort = 5432;
+
         return new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1-alpine"))
                 .withCreateContainerCmdModifier(cmd -> {
                     cmd.withName("sj2324-pos-postgres");

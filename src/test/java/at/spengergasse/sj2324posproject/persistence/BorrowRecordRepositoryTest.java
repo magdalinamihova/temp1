@@ -26,7 +26,7 @@ class BorrowRecordRepositoryTest {
     void setup() {
         //#TODO you would not have needed the previous lines with cascade types set on the book to user relation
         User savedUser = userRepository.save(user());
-        Book book = book(savedUser);
+        Book book = book1(savedUser);
         Book savedBook = bookRepository.save(book);
         BorrowRecord borrowRecord = borrowRecord(savedUser,book);
         borrowRecordRepository.save(borrowRecord);

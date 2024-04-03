@@ -19,13 +19,13 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class UserService {
-
+    //private static final Logger logger = LoggerFactory.getLogger(BookService.class);
+    //private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final UserRepository repository;
 
     public List<User> fetchUsers(Optional<String> username) {
         return username.map(repository::findAllByUsername)
                 .orElseGet(repository::findAll);
     }
-
     public Optional<User> findByUsername(String username) { return repository.findByUsername(username);}
 }
