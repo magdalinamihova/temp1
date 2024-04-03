@@ -3,7 +3,7 @@ package at.spengergasse.sj2324posproject.domain;
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.*;
 import at.spengergasse.sj2324posproject.domain.enums.*;
-import at.spengergasse.sj2324posproject.domain.records.Address;
+import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;

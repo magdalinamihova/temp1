@@ -1,6 +1,6 @@
 package at.spengergasse.sj2324posproject.persistence.converters;
 
-import at.spengergasse.sj2324posproject.domain.records.Address;
+import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

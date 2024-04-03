@@ -1,6 +1,6 @@
 package at.spengergasse.sj2324posproject.persistence.converters;
 
-import at.spengergasse.sj2324posproject.domain.records.Address;
+import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.util.Objects;

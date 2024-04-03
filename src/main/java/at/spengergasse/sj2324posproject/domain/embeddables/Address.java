@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.domain.records;
+package at.spengergasse.sj2324posproject.domain.embeddables;
 
 import jakarta.persistence.Embeddable;
 
