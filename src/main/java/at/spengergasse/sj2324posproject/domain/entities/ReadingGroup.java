@@ -16,7 +16,7 @@ import static at.spengergasse.sj2324posproject.foundation.Ensurer.isNotNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 @Entity
-@Table(name="readingGroups")
+@Table(name="reading_groups")
 public class ReadingGroup extends AbstractPersistable<Long> {
     @Column(length = 64, nullable = false)
     private @NotNull @NotEmpty String name;

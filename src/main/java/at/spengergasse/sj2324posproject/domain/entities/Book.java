@@ -72,7 +72,7 @@ public class Book extends AbstractPersistable<Long> {
         this.bookCover = bookCover;
         this.hardCover = hardCover;
         this.dueDate = dueDate;
-       // this.reviews = reviews;
+        // this.reviews = reviews;
         this.postedBy = postedBy;
         this.bookStatus = BookStatus.AVAILABLE;
         this.key = isNotNull(key, "book_key");
@@ -83,4 +83,3 @@ public class Book extends AbstractPersistable<Long> {
         this.bookStatus=BookStatus.AVAILABLE;
     }
 }
-

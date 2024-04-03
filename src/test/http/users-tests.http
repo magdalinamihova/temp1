@@ -1,7 +1,0 @@
-### all users
-GET http://localhost:8080/api/users
-Accept: application/json
-
-### user with username shauna_shipman
-GET http://localhost:8080/api/users?username=shauna_shipman
-Accept: application/json

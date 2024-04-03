@@ -9,6 +9,7 @@ import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import at.spengergasse.sj2324posproject.persistence.BookRepository;
 import at.spengergasse.sj2324posproject.persistence.UserRepository;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,32 +56,36 @@ public class TestFixtures {
         return photo;
     }
     public static User user (){
+        String key = RandomStringUtils.random(12);
         return User.builder()
                 .username("josie")
                 .firstName("Josette")
                 .lastName("March")
                 .email(Email.of("josie@gmail.com"))
-                .password("jos123")
+                .password("!VerySecret2024")
                 .phoneNumber(PhoneNumber.of("+43123456789"))
                 .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
-                .userRole(UserRole.STANDARD)
+                .userRole(UserRole.ADMIN)
                 .profilePic(profilePic())
+                .key("abc-key")
                 .build();
     }
 
     public static User user1 (){
+        String key = RandomStringUtils.random(12);
         return User.builder()
                 .username("brooke")
                 .firstName("brooke")
                 .lastName("thompson")
                 .email(Email.of("brooke@gmail.com"))
-                .password("bro123")
+                .password("!VerySecret2024")
                 .phoneNumber(PhoneNumber.of("+43123456789"))
                 .address(Address.of("69 Liesingbachstraße", "Vienna", "1100", "Austria"))
                 .gender(Gender.FEMALE)
                 .userRole(UserRole.STANDARD)
                 .profilePic(profilePic())
+                .key("def-key")
                 .build();
     }
 
@@ -106,7 +111,7 @@ public class TestFixtures {
                 .bookDescription("Description")
                 .genre("Period piece")
                 .language(Language.ENGLISH)
-               // .bookCover(bookCover())
+                .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
                 .key("111-key")
@@ -140,7 +145,7 @@ public class TestFixtures {
         return MembershipRequest.builder()
                 .requestingUser(requestingUser)
                 .requestedReadingGroup(requestedRG)
-                .status(RequestStatus.APPROVED)
+                .request_status(RequestStatus.APPROVED)
                 .build();
     }
 

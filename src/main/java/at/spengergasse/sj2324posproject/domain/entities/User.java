@@ -6,6 +6,7 @@ import at.spengergasse.sj2324posproject.domain.enums.Gender;
 import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
+import at.spengergasse.sj2324posproject.foundation.StrongPassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,8 +33,8 @@ public class User extends AbstractPersistable<Long> {
     @Column(length = 64)
     private  @NotNull @NotEmpty @NotBlank String lastName;
 
-    @Column(length = 256)
-    private  @NotNull @NotEmpty @NotBlank String password;
+    @Column(length = 100)
+    private  @NotNull @NotEmpty @NotBlank @StrongPassword String password;
 
     private @NotNull Email email;
 
@@ -42,6 +43,9 @@ public class User extends AbstractPersistable<Long> {
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "address"))
     private Address address;
+
+    @Column(name = "user_key", length = 40, nullable = false, unique = true)
+    private @NotBlank String key;
 
     @Column(columnDefinition = "CHAR(1) CHECK(gender in ('f','m','o','u'))")
     private Gender gender;
@@ -56,16 +60,33 @@ public class User extends AbstractPersistable<Long> {
     //RELATIONSHIPS
     @OneToMany(mappedBy = "createdBy")
     private Set<ReadingGroup> groupsOwned;
+
     @OneToMany(mappedBy = "reviewer")
     private Set<Review> reviews;
+
     @OneToMany(mappedBy = "member")
     private Set<Membership> memberships;
+
+    /*@Builder
+    public User(String username, String firstName, String lastName, String password, Email email, UserRole userRole) {
+        this(username, firstName, lastName, password, email, userRole);
+    }*/
+
+    /*@Builder
+    public User(String username, String firstName, String lastName, String password, Email email, UserRole userRole) {
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.userRole = userRole;
+    }*/
 
     @Builder
     public User(
             String username, String firstName, String lastName,
             String password, Email email, PhoneNumber phoneNumber,
-            Address address, Gender gender, UserRole userRole, Photo profilePic,
+            Address address,  String key, Gender gender, UserRole userRole, Photo profilePic,
             Set<ReadingGroup> groupsOwned, Set<Review> reviews, Set<Membership> memberships
     ) {
         this.username = isNotNull(username, "username");
@@ -81,6 +102,7 @@ public class User extends AbstractPersistable<Long> {
         this.groupsOwned = groupsOwned;
         this.reviews = reviews;
         this.memberships = memberships;
+        this.key = isNotNull(key, "user_key");
     }
 
 }
