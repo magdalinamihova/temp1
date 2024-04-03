@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{books.list.title}">Title</title>
@@ -28,7 +28,7 @@
             <td th:text="*{genre}">Classic</td>
             <td>
                 <a href="#" class="btn btn-tiny btn-primary" th:href="@{/templates/books/edit/{id}(id=*{key})}" th:text="#{button.edit}">Edit</a>
-                <a href="#" class="btn btn-tiny btn-danger" th:href="@{/templates/books/delete/{id}(id=*{key})}" th:text="#{button.delete}">Delete</a>
+                <a href="#" class="btn btn-tiny btn-danger" th:href="@{/books/delete/{id}(id=*{key})}" th:text="#{button.delete}">Delete</a>
             </td>
         </tr>
         </tbody>

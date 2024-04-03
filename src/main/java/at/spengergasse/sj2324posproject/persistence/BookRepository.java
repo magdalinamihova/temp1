@@ -19,6 +19,9 @@ public interface BookRepository extends JpaRepository<Book,Long>,BookRepositoryC
 
     @Query("from Book b where b.author ilike ?1")
     List<Book> queryByAuthorNamePart(String namePart);
+
+    //TODO: test
+    void deleteByKey(String key);
 }
 
 

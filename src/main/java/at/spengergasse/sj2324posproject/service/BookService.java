@@ -86,4 +86,7 @@ public class BookService implements LikeSupport {
                 .orElseThrow(() -> BookNotFoundException.forBookTitle(bookTitle));
     }
 
+    public void deleteBook(String key){
+        bookRepository.deleteByKey(key);
+    }
 }

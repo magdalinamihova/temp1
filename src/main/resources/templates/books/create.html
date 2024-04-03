@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:text="#{book.add.title}">Add pook</title>
@@ -8,6 +8,9 @@
 <body>
 <div class="container">
     <h1 th:text="#{book.add.title}">Add book</h1>
+    <div th:if="${bookTitleExists}" class="alert alert-danger">
+        <p th:text="#{book.title.exists}">The book already exists.</p>
+    </div>
     <form method="post" th:object="${form}">
         <div class="mb-3">
             <label for="bookTitle" class="form-label" th:text="#{books.label.bookTitle}">Book Title</label>
