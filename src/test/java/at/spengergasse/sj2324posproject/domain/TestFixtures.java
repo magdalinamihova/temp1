@@ -111,7 +111,7 @@ public class TestFixtures {
                 .bookDescription("Description")
                 .genre("Period piece")
                 .language(Language.ENGLISH)
-               // .bookCover(bookCover())
+                .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
                 .key("111-key")
@@ -128,6 +128,7 @@ public class TestFixtures {
                 .bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
+                .key("222-key")
                 .build();
     }
 
@@ -144,7 +145,7 @@ public class TestFixtures {
         return MembershipRequest.builder()
                 .requestingUser(requestingUser)
                 .requestedReadingGroup(requestedRG)
-                .status(RequestStatus.APPROVED)
+                .request_status(RequestStatus.APPROVED)
                 .build();
     }
 

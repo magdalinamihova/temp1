@@ -39,10 +39,10 @@ public class UserService {
     private final PasswordPolicy passwordPolicy;
     private final HttpBinConnector httpBin;
     public List<User> fetchUsers(Optional<String> username) {
-        return username.map(repository::findAllByUsername)
-                .orElseGet(repository::findAll);
+        return username.map(userRepository::findAllByUsername)
+                .orElseGet(userRepository::findAll);
     }
-    public Optional<User> findByUsername(String username) { return repository.findByUsername(username);}
+    public Optional<User> findByUsername(String username) { return userRepository.findByUsername(username);}
 
     public User register(String username, String firstName, String lastName, String password, Email email, UserRole userRole,
                          PhoneNumber phoneNumber, Address address, Gender gender, Photo profilePic, Set<ReadingGroup> groupsOwned,

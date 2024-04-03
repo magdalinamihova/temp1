@@ -6,7 +6,7 @@ import at.spengergasse.sj2324posproject.domain.entities.ReadingGroup;
 import at.spengergasse.sj2324posproject.domain.entities.Review;
 import at.spengergasse.sj2324posproject.domain.enums.Gender;
 import at.spengergasse.sj2324posproject.domain.enums.UserRole;
-import at.spengergasse.sj2324posproject.domain.records.Address;
+import at.spengergasse.sj2324posproject.domain.embeddables.Address;
 import at.spengergasse.sj2324posproject.domain.records.Email;
 import at.spengergasse.sj2324posproject.domain.records.PhoneNumber;
 import at.spengergasse.sj2324posproject.foundation.PasswordMatching;
