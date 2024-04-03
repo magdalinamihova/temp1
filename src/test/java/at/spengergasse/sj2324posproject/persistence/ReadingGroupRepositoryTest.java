@@ -38,6 +38,11 @@ class ReadingGroupRepositoryTest {
     void ensureFindByNameWorks() {
         assertThat(readingGroupRepository.findByName("Book Club 1")).isPresent();
     }
+
+    @Test
+    void ensureReadReadingGroupProjectionWorks() {
+        assertThat(readingGroupRepository.findAllByNameLikeIgnoreCase("Club 1")).isNotNull();
     }
+}
 
 
