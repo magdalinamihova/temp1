@@ -1,4 +1,4 @@
-package at.spengergasse.sj2324posproject.presentation.api;
+package at.spengergasse.sj2324posproject.presentation.api.books;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.User;

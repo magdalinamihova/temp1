@@ -97,4 +97,37 @@ public class BookService implements LikeSupport {
         return bookRepository.findByKey(key);
     }
 
+    //TODO: test
+    @Transactional
+    public Book updateBook(String key, String bookTitle, String author, String bookDescription, Language language,
+                           String genre, Photo bookCover, boolean hardCover, Date dueDate, User postedBy) {
+
+        Optional<Book> existingBookOptional = bookRepository.findByKey(key);
+        if (existingBookOptional.isEmpty()) {
+            throw new IllegalArgumentException("Book not found with key: " + key);
+        }
+
+        var bookExists = bookRepository.findByBookTitleAndPostedBy(bookTitle,postedBy);
+
+        if (bookExists.isPresent()) {
+            log.warn("Book {} already posted!", bookTitle);
+            throw new BookAlreadyExistsException(bookTitle);
+        }
+
+        Book existingBook = existingBookOptional.get();
+        existingBook.setBookTitle(bookTitle);
+        existingBook.setAuthor(author);
+        existingBook.setBookDescription(bookDescription);
+        existingBook.setLanguage(language);
+        existingBook.setGenre(genre);
+        existingBook.setBookCover(bookCover);
+        existingBook.setHardCover(hardCover);
+        existingBook.setDueDate(dueDate);
+
+        bookRepository.save(existingBook);
+        log.info("Updated book with key: {}", key);
+
+        return existingBook;
+    }
+
 }

@@ -1,15 +1,11 @@
-package at.spengergasse.sj2324posproject.presentation.www;
+package at.spengergasse.sj2324posproject.presentation.www.books;
 
 import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
-import at.spengergasse.sj2324posproject.domain.entities.User;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import io.micrometer.common.lang.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.AccessLevel;
 
 import java.util.Date;
 

@@ -27,7 +27,7 @@
             <td th:text="*{language}">English</td>
             <td th:text="*{genre}">Classic</td>
             <td>
-                <a href="#" class="btn btn-tiny btn-primary" th:href="@{/templates/books/edit/{id}(id=*{key})}" th:text="#{button.edit}">Edit</a>
+                <a href="#" class="btn btn-tiny btn-primary" th:href="@{/books/edit/{id}(id=*{key})}" th:text="#{button.edit}">Edit</a>
                 <a href="#" class="btn btn-tiny btn-danger" th:href="@{/books/delete/{id}(id=*{key})}" th:text="#{button.delete}">Delete</a>
             </td>
         </tr>
