@@ -2,6 +2,7 @@
 ## Notes!!! 02.04.24
 
 Notes: Questions are commented out as //QUESTION on the code
+Code is very ugly due to time constraints and some tests are TBA
 
 <a name="readme-top"></a>
 
