@@ -16,6 +16,7 @@
             <th scope="col" th:text="#{books.label.author}">Author</th>
             <th scope="col" th:text="#{books.label.language}">Language</th>
             <th scope="col" th:text="#{books.label.genre}">Genre</th>
+            <th scope="col" th:text="#{books.label.postedById}">User Id</th>
             <th scope="col"><a href="#" class="btn btn-tiny btn-primary" th:href="@{/books/create}" th:text="#{button.create}">Create</a></th>
         </tr>
         </thead>
@@ -26,6 +27,7 @@
             <td th:text="*{author}">Louisa May Alcott</td>
             <td th:text="*{language}">English</td>
             <td th:text="*{genre}">Classic</td>
+            <td th:text="*{postedBy.getId()}">1</td>
             <td>
                 <a href="#" class="btn btn-tiny btn-primary" th:href="@{/books/edit/{id}(id=*{key})}" th:text="#{button.edit}">Edit</a>
                 <a href="#" class="btn btn-tiny btn-danger" th:href="@{/books/delete/{id}(id=*{key})}" th:text="#{button.delete}">Delete</a>
