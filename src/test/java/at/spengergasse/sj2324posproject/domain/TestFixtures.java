@@ -111,7 +111,7 @@ public class TestFixtures {
                 .bookDescription("Description")
                 .genre("Period piece")
                 .language(Language.ENGLISH)
-                .bookCover(bookCover())
+                //.bookCover(bookCover())
                 .hardCover(true)
                 .postedBy(postedBy)
                 .key("111-key")

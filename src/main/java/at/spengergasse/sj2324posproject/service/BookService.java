@@ -77,6 +77,7 @@ public class BookService implements LikeSupport {
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
+
     @Transactional(readOnly = true)
     public Optional<Book> getBook(Long id) {return bookRepository.findById(id);}
 
@@ -86,7 +87,14 @@ public class BookService implements LikeSupport {
                 .orElseThrow(() -> BookNotFoundException.forBookTitle(bookTitle));
     }
 
+    //TODO: test
     public void deleteBook(String key){
         bookRepository.deleteByKey(key);
     }
+
+    //TODO: test
+    public Optional<Book> getBookByKey(String key){
+        return bookRepository.findByKey(key);
+    }
+
 }

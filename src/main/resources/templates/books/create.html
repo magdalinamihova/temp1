@@ -9,20 +9,23 @@
 <div class="container">
     <h1 th:text="#{book.add.title}">Add book</h1>
     <div th:if="${bookTitleExists}" class="alert alert-danger">
-        <p th:text="#{book.title.exists}">The book already exists.</p>
+        <p th:text="#{book.title.exists}">This book has already been posted!</p>
     </div>
     <form method="post" th:object="${form}">
         <div class="mb-3">
             <label for="bookTitle" class="form-label" th:text="#{books.label.bookTitle}">Book Title</label>
             <input type="text" class="form-control" id="bookTitle" th:field="*{bookTitle}">
+            <span class="text-danger" th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></span>
         </div>
         <div class="mb-3">
             <label for="author" class="form-label" th:text="#{books.label.author}">Author</label>
             <input type="text" class="form-control" id="author" th:field="*{author}">
+            <span class="text-danger" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
         </div>
         <div class="mb-3">
             <label for="bookDescription" class="form-label" th:text="#{books.label.bookDescription}">Description</label>
             <input type="text" class="form-control" id="bookDescription" th:field="*{bookDescription}">
+            <span class="text-danger" th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></span>
         </div>
         <div class="mb-3">
             <label for="language" class="form-label" th:text="#{books.label.language}">Language</label>
@@ -35,10 +38,12 @@
         <div class="mb-3">
             <label for="genre" class="form-label" th:text="#{books.label.genre}">Genre</label>
             <input type="text" class="form-control" id="genre" th:field="*{genre}">
+            <span class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></span>
         </div>
         <div class="mb-3">
             <label for="postedById" class="form-label" th:text="#{books.label.postedById}">Posted By</label>
             <input type="number" class="form-control" id="postedById" th:field="*{postedById}">
+<!--            <span class="text-danger" th:if="${invalidPostedById}" th:text="#{books.error.postedById.notNull}"></span>-->
         </div>
         <div class="mb-3">
             <label for="hardCover" class="form-label" th:text="#{books.label.hardCover}">Hard Cover</label>

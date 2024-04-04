@@ -4,7 +4,7 @@ import at.spengergasse.sj2324posproject.domain.embeddables.Photo;
 import at.spengergasse.sj2324posproject.domain.entities.User;
 import at.spengergasse.sj2324posproject.domain.enums.Language;
 import io.micrometer.common.lang.Nullable;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.Getter;
@@ -15,15 +15,15 @@ import java.util.Date;
 
 @Slf4j
 public record CreateBookForm (
-        @NotNull @NotEmpty String bookTitle,
-        @NotNull @NotEmpty String author,
-        @NotNull @NotEmpty String bookDescription,
-        Language language,  // Corrected type to Language enum
-        @NotNull @NotEmpty String genre,
+        @NotBlank(message = "{books.error.bookTitle.notEmpty}") String bookTitle,
+        @NotBlank(message = "{books.error.author.notEmpty}") String author,
+        @NotBlank(message = "{books.error.bookDescription.notEmpty}") String bookDescription,
+        @NotNull(message = "{books.error.language.notNull}") Language language,
+        @NotBlank(message = "{books.error.genre.notEmpty}") String genre,
         Photo bookCover,
         boolean hardCover,
         @Nullable Date dueDate,
-        @NotNull Long postedById
+        @NotNull(message = "{books.error.postedById.notNull}") Long postedById
 ){
     public CreateBookForm{
         log.info("in record constructor of {}", this.getClass().getSimpleName());

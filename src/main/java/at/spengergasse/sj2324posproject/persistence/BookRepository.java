@@ -22,6 +22,9 @@ public interface BookRepository extends JpaRepository<Book,Long>,BookRepositoryC
 
     //TODO: test
     void deleteByKey(String key);
+
+    //TODO:test
+    Optional<Book> findByKey(String key);
 }
 
 

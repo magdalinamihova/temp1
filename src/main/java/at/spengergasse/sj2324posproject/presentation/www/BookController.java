@@ -43,9 +43,7 @@ public class BookController implements RedirectForwardSupport{
     }
 
     @PostMapping("/create")
-    public String handleCreateBookFormSubmission(Model model,
-                                                 @Valid @ModelAttribute(name="form") CreateBookForm form,
-                                                 BindingResult bindingResult) {
+    public String handleCreateBookFormSubmission(Model model, @Valid @ModelAttribute(name="form") CreateBookForm form, BindingResult bindingResult) {
         boolean bookTitleExists = false;
         if (bindingResult.hasErrors()) {
             log.warn("Validation failed: {}", bindingResult.getAllErrors());
@@ -68,9 +66,17 @@ public class BookController implements RedirectForwardSupport{
             model.addAttribute("bookTitleExists", bookTitleExists);
             return "books/create";
         }
-
         return redirect("/books");
     }
+
+    @GetMapping("/edit/{key}")
+    private String showEditBookForm(Model model, @PathVariable String key){
+        bookService.getBookByKey(key)
+                        .map(b -> new EditBookForm(b.getBookTitle(), b.getAuthor(),b.getBookDescription(),b.getLanguage(),b.getGenre(),null,b.isHardCover(), null, b.getPostedBy().getId()));
+        model.addAttribute("form", CreateBookForm.create());
+        return "books/create";
+    }
+
     @GetMapping("/delete/{key}")
     private String deleteBook(@PathVariable String key) {
         bookService.deleteBook(key);

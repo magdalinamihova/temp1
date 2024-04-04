@@ -81,6 +81,7 @@ class BookRepositoryTest {
     @Test
     void ensureFindingByAuthorNamePartReturnsAResult(){
         var found = bookRepository.findByAuthorNamePart("L");
+        System.out.println(found);
         assertThat(found).isNotNull().isNotEmpty();
     }
 
